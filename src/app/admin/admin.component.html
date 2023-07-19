@@ -24,7 +24,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a class="nav-link" routerLinkActive="active" routerLink="">Home</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -48,7 +48,6 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-          <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
@@ -70,55 +69,84 @@
               role="menu"
               data-accordion="false"
             >
-              <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-              <li class="nav-item menu-open">
-                <a href="#" class="nav-link active">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="dashboard"
+                >
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="quanlygiaohang"
+                >
                   <i class="nav-icon fas fa-th"></i>
-                  <p>Loại hàng giao</p>
+                  <p>Quản lý giao hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="quanlyphuongthucvanchuyen"
+                >
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>Quản lý phương thức vận chuyển</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="quanlythanhtoan"
+                >
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>Quản lý thanh toán</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="xembaocaodatgiao"
+                >
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>Xem báo cáo đặt giao</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="vohieuhoataixe"
+                >
+                  <i class="nav-icon fas fa-th"></i>
+                  <p>Vô hiệu hoa tài xế</p>
                 </a>
               </li>
             </ul>
           </nav>
-          <!-- /.sidebar-menu -->
         </div>
-        <!-- /.sidebar -->
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
-              </div>
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
         <!-- ADMIN-MAIN -->
-        <app-admin-main></app-admin-main>
+        <!-- <app-admin-main></app-admin-main> -->
+        <router-outlet></router-outlet>
       </div>
-      <!-- /.content-wrapper -->
+      
       <footer class="main-footer">
         <div class="float-right d-none d-sm-inline-block">
           <strong>Copyright &copy; 7/2023 <a href="#">LeDaoSyQuynh</a>.</strong>
         </div>
       </footer>
 
-      <!-- /.control-sidebar -->
     </div>
-    <!-- ./wrapper -->
   </body>
 </html>

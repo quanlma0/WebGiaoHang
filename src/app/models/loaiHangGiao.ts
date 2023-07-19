@@ -1,6 +1,6 @@
 export class LoaiHangGiao {
-  constructor(public maloaihanggiao: string, public tenloai: string) {
-    this.maloaihanggiao = maloaihanggiao
-    this.tenloai = tenloai
+  constructor(public maLHG: number, public tenLHG: string) {
+    this.maLHG = maLHG
+    this.tenLHG = tenLHG
   }
 }

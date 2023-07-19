@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">Bạn có chắc muốn xoá ?</h1>
+    <form #f="ngForm">
+      <div class="form-group">
+        <label for="tenLHG" class="form-lable">Tên loại giao hàng</label>
+        <input
+          type="text"
+          class="form-control"
+          id="tenLHG"
+          name="tenLHG"
+          #tenLHG
+          ngModel
+          disabled
+        />
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button (click)="onDelete()" type="submit" class="btn btn-danger">
+          xoá luôn
+        </button>
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,282 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h1>Tiến Hành Giao Hàng</h1>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img
+        src="assets/images/hero_bg_4.jpg "
+        width="300"
+        height="300"
+        style="border-radius: 30px"
+      />
+    </div>
+
+    <form [formGroup]="f" (ngSubmit)="GiaoNgay()" style="padding: 30px">
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="tenNguoiGui">Họ Tên Nguời Gửi</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tenNguoiGui"
+            name="tenNguoiGui"
+            formControlName="tenNguoiGui"
+          />
+          <div
+            *ngIf="
+              f.controls['tenNguoiGui'].invalid &&
+              (f.controls['tenNguoiGui'].dirty ||
+                f.controls['tenNguoiGui'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['tenNguoiGui'].hasError('required')"
+            >
+              Chưa nhập Họ Tên
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="sdtNguoiGui">SĐT Nguời Gửi</span>
+          <input
+            type="text"
+            class="form-control"
+            id="sdtNguoiGui"
+            name="sdtNguoiGui"
+            formControlName="sdtNguoiGui"
+          />
+          <div
+            *ngIf="
+              f.controls['sdtNguoiGui'].invalid &&
+              (f.controls['sdtNguoiGui'].dirty ||
+                f.controls['sdtNguoiGui'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['sdtNguoiGui'].hasError('required')"
+            >
+              Số điện thoại là bắt buộc.
+            </div>
+            <div
+              style="color: red"
+              *ngIf="f.controls['sdtNguoiGui'].hasError('pattern')"
+            >
+              Số điện thoại phải có đúng 10 số.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="tenNguoiNhan">Họ Tên Người Nhận</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tenNguoiNhan"
+            name="tenNguoiNhan"
+            formControlName="tenNguoiNhan"
+          />
+          <div
+            *ngIf="
+              f.controls['tenNguoiNhan'].invalid &&
+              (f.controls['tenNguoiNhan'].dirty || f.controls['tenNguoiNhan'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['tenNguoiNhan'].hasError('required')"
+            >
+              Chưa nhập Họ Tên
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="sdtNguoiNhan">SĐT Người Nhận</span>
+          <input
+            type="text"
+            class="form-control"
+            id="sdtNguoiNhan"
+            name="sdtNguoiNhan"
+            formControlName="sdtNguoiNhan"
+          />
+          <div
+            *ngIf="
+              f.controls['sdtNguoiNhan'].invalid &&
+              (f.controls['sdtNguoiNhan'].dirty || f.controls['sdtNguoiNhan'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['sdtNguoiNhan'].hasError('required')"
+            >
+              Số điện thoại là bắt buộc.
+            </div>
+            <div
+              style="color: red"
+              *ngIf="f.controls['sdtNguoiNhan'].hasError('pattern')"
+            >
+              Số điện thoại phải có đúng 10 số.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="diaChiGiao">Địa Chỉ Giao</span>
+          <input
+            type="text"
+            class="form-control"
+            id="diaChiGiao"
+            name="diaChiGiao"
+            formControlName="diaChiGiao"
+          />
+          <div
+            *ngIf="
+              f.controls['diaChiGiao'].invalid &&
+              (f.controls['diaChiGiao'].dirty ||
+                f.controls['diaChiGiao'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['diaChiGiao'].hasError('required')"
+            >
+              Chưa nhập địa chỉ giao
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="diaChiNhan">Địa Chỉ Nhận</span>
+          <input
+            type="text"
+            class="form-control"
+            id="diaChiNhan"
+            name="diaChiNhan"
+            formControlName="diaChiNhan"
+          />
+          <div
+            *ngIf="
+              f.controls['diaChiNhan'].invalid &&
+              (f.controls['diaChiNhan'].dirty ||
+                f.controls['diaChiNhan'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['diaChiNhan'].hasError('required')"
+            >
+              Chưa nhập địa chỉ nhận
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="khoangCach">Khoảng Cách</span>
+          <input
+            type="text"
+            class="form-control"
+            id="khoangCach"
+            name="khoangCach"
+            formControlName="khoangCach"
+          />
+        </div>
+      </div>
+
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="pttt">Phương thức thanh toán</span>
+          <select class="form-control" formControlName="pttt">
+            <option *ngFor="let item of pttt" [value]="item.maPTTT">
+              {{ item.tenPTTT }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['pttt'].invalid &&
+              (f.controls['pttt'].dirty || f.controls['pttt'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['pttt'].hasError('required')"
+            >
+              Chưa chọn phương thức thanh toán
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="ptvc">Phương thức vận chuyển</span>
+          <select class="form-control" formControlName="ptvc">
+            <option *ngFor="let item of ptvc" [value]="item.maPTVC">
+              {{ item.tenPTVC }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['ptvc'].invalid &&
+              (f.controls['ptvc'].dirty || f.controls['ptvc'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['ptvc'].hasError('required')"
+            >
+              Chưa chọn phương thức vận chuyển
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="ptgh">Phương thức giao hàng</span>
+          <select class="form-control" formControlName="ptgh">
+            <option *ngFor="let item of ptgh" [value]="item.maPTGH">
+              {{ item.tenPTGH }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['ptgh'].invalid &&
+              (f.controls['ptgh'].dirty || f.controls['ptgh'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['ptgh'].hasError('required')"
+            >
+              Chưa chọn phương thức giao hàng
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="km">Khuyến mãi %</span>
+          <select class="form-control" formControlName="km">
+            <option *ngFor="let item of km" [value]="item.maKM">
+              {{ item.phanTramKM }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="tt">Tổng tiền</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tt"
+            name="tt"
+            formControlName="tt"
+          />
+        </div>
+      </div>
+
+      <button *ngIf="!processing" type="submit" class="btn btn-primary">
+        Giao Ngay
+      </button>
+      <p *ngIf="processing">Đăng tải...</p>
+    </form>
+  </div>
+</div>

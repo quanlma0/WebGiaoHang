@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { LoaiHangGiao } from "src/app/models/loaiHangGiao";
 

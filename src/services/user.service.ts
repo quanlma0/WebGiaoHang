@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { User } from 'src/app/models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserStoreService } from './user-store.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,8 @@ export class USService {
   private userPayload: any;
 
   readonly APIUrl = "https://localhost:7249/api"
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router,
+    private usStore: UserStoreService) {
     this.userPayload = this.decodeToken()
   }
 
@@ -27,9 +29,7 @@ export class USService {
   }
 
 
-  getTK(email: string): Observable<TaiKhoan> {
-    return this.http.get<TaiKhoan>(this.APIUrl + '/TaiKhoans/GetEmail/' + email)
-  }
+  
 
   storeToken(tokenValue: string) {
     localStorage.setItem('token', tokenValue)
@@ -46,7 +46,7 @@ export class USService {
   decodeToken() {
     const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
-    console.log(jwtHelper.decodeToken(token))
+    // console.log(jwtHelper.decodeToken(token))
     return jwtHelper.decodeToken(token);
   }
 
@@ -60,7 +60,10 @@ export class USService {
       return this.userPayload.role
   }
 
-
+  getEmailFromToken() {
+    if (this.userPayload)
+      return this.userPayload.email
+  }
 
 
 

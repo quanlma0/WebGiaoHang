@@ -1,0 +1,143 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">Thông Tin Tài Khoản</h1>
+    <form #f="ngForm">
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="maTK">Mã Tài Khoản</span>
+          <input
+            type="text"
+            class="form-control"
+            id="maTK"
+            name="maTK"
+            #maTK
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="email">Email</span>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            #email
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="matKhau">Mật Khẩu</span>
+          <input
+            type="password"
+            class="form-control"
+            id="matKhau"
+            name="matKhau"
+            #matKhau
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="hoTen">Họ Tên</span>
+        <input
+          type="text"
+          class="form-control"
+          id="hoTen"
+          name="hoTen"
+          #hoTen
+          ngModel
+          disabled="true"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="sdt">Số Điện Thoại</span>
+        <input
+          type="text"
+          class="form-control"
+          id="sdt"
+          name="sdt"
+          #sdt
+          ngModel
+          disabled="true"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="diaChi">Địa Chỉ</span>
+        <input
+          type="text"
+          class="form-control"
+          id="diaChi"
+          name="diaChi"
+          #diaChi
+          ngModel
+          disabled="true"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="ngaySinh">Ngày Sinh</span>
+        <input
+          type="date"
+          class="form-control"
+          id="ngaySinh"
+          name="ngaySinh"
+          #ngaySinh
+          ngModel
+          disabled="true"
+        />
+      </div>
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="gioiTinh">Giới Tính</span>
+          <input
+            type="text"
+            class="form-control"
+            id="gioiTinh"
+            name="gioiTinh"
+            #gioiTinh
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="tenCV">Chức Vụ</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tenCV"
+            name="tenCV"
+            #tenCV
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="trangThaiTK">Trạng Thái Tài Khoản</span>
+          <input
+            type="text"
+            class="form-control"
+            id="trangThaiTK"
+            name="trangThaiTK"
+            #trangThaiTK
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+
+      <div class="col-md-4"></div>
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

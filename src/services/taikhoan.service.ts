@@ -12,10 +12,14 @@ export class TKService {
   readonly APIUrl = "https://localhost:7249/api"
   constructor(private http: HttpClient) { }
 
+  getTKFromEmail(email: string): Observable<TaiKhoan> {
+    return this.http.get<TaiKhoan>(this.APIUrl + '/TaiKhoans/GetEmail/' + email)
+  }
+
   getAllTaiKhoans(): Observable<TaiKhoan[]> {
     return this.http.get<TaiKhoan[]>(this.APIUrl + '/TaiKhoans');
   }
-   addTK(newTK: TaiKhoan): Observable<TaiKhoan> {
+  addTK(newTK: TaiKhoan): Observable<TaiKhoan> {
     return this.http.post<TaiKhoan>(this.APIUrl + '/TaiKhoans', newTK);
   }
 

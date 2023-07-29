@@ -1,0 +1,214 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h1>Đăng Ký Khách Hàng</h1>
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="assets/images/signup-image.jpg" alt="sing up image" />
+    </div>
+
+    <form [formGroup]="f" (ngSubmit)="Register()" style="padding: 30px">
+      <div class="mb-3">
+        <span class="row mb-1" for="hoTen">Họ Tên</span>
+        <input
+          type="text"
+          class="form-control"
+          id="hoTen"
+          name="hoTen"
+          formControlName="hoTen"
+        />
+        <div
+          *ngIf="
+            f.controls['hoTen'].invalid &&
+            (f.controls['hoTen'].dirty || f.controls['hoTen'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['hoTen'].hasError('required')"
+          >
+            Chưa nhập Họ Tên
+          </div>
+        </div>
+      </div>
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="email">Email</span>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            formControlName="email"
+          />
+          <div
+            *ngIf="
+              f.controls['email'].invalid &&
+              (f.controls['email'].dirty || f.controls['email'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['email'].hasError('required')"
+            >
+              Chưa nhập email
+            </div>
+            <div
+              style="color: red"
+              *ngIf="f.controls['email'].hasError('email')"
+            >
+              email sai định dạng
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="matKhau">Mật Khẩu</span>
+          <input
+            type="password"
+            class="form-control"
+            id="matKhau"
+            name="matKhau"
+            formControlName="matKhau"
+          />
+          <div
+            *ngIf="
+              f.controls['matKhau'].invalid &&
+              (f.controls['matKhau'].dirty || f.controls['matKhau'].touched)
+            "
+          >
+            <div
+              *ngIf="f.controls['matKhau'].hasError('required')"
+              style="color: red"
+            >
+              Chưa nhập Mật khẩu
+            </div>
+            <div
+              style="color: red"
+              *ngIf="f.controls['matKhau'].hasError('minlength')"
+            >
+              Mật khẩu ít nhất 8 ký tự
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="sdt">Số Điện Thoại</span>
+        <input
+          type="text"
+          class="form-control"
+          id="sdt"
+          name="sdt"
+          formControlName="sdt"
+        />
+        <div
+          *ngIf="
+            f.controls['sdt'].invalid &&
+            (f.controls['sdt'].dirty || f.controls['sdt'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['sdt'].hasError('required')"
+          >
+            Số điện thoại là bắt buộc.
+          </div>
+          <div style="color: red" *ngIf="f.controls['sdt'].hasError('pattern')">
+            Số điện thoại phải có đúng 10 số.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="diaChi">Địa Chỉ</span>
+        <input
+          type="text"
+          class="form-control"
+          id="diaChi"
+          name="diaChi"
+          formControlName="diaChi"
+        />
+        <div
+          *ngIf="
+            f.controls['diaChi'].invalid &&
+            (f.controls['diaChi'].dirty || f.controls['diaChi'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['diaChi'].hasError('required')"
+          >
+            Chưa nhập địa chỉ
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="ngaySinh">Ngày Sinh</span>
+        <input
+          type="date"
+          class="form-control"
+          id="ngaySinh"
+          name="ngaySinh"
+          formControlName="ngaySinh"
+        />
+        <div
+          *ngIf="
+            f.controls['ngaySinh'].invalid &&
+            (f.controls['ngaySinh'].dirty || f.controls['ngaySinh'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngaySinh'].hasError('required')"
+          >
+            Hãy nhập ngày sinh
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="gioiTinh">Giới Tính</span>
+          <select class="form-control" formControlName="gioiTinh">
+            <option *ngFor="let gt of gioitinh" [value]="gt">{{ gt }}</option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['gioiTinh'].invalid &&
+              (f.controls['gioiTinh'].dirty || f.controls['gioiTinh'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['gioiTinh'].hasError('required')"
+            >
+              Chưa chọn giới tính
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="tenCV">Chức Vụ</span>
+          <select class="form-control" formControlName="tenCV">
+            <option *ngFor="let cv of chucvu" [value]="cv">{{ cv }}</option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['tenCV'].invalid &&
+              (f.controls['tenCV'].dirty || f.controls['tenCV'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['tenCV'].hasError('required')"
+            >
+              Chưa chọn chức vụ
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button *ngIf="!processing" type="submit" class="btn btn-primary">
+        Đăng Ký
+      </button>
+      <p *ngIf="processing">Đăng tải...</p>
+    </form>
+  </div>
+</div>

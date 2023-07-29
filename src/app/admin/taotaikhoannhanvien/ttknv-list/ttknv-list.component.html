@@ -1,0 +1,35 @@
+<table class="table table-bordered table-striped" style="width: 100">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>OPTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p *ngIf="!taikhoannvs && processing">Không có tài khoản nhân viên nào!</p>
+    <p *ngIf="!processing">Đang tải...</p>
+    <tr *ngFor="let item of taikhoannvs">
+      <td width="30%">{{ item.maTK }}</td>
+      <td width="50%">{{ item.email }}</td>
+      <td class="btn-group" role="group">
+        <a
+          class="btn btn-primary mx-2"
+          style="color: white"
+          (click)="onViewDetail(item.maTK)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Xem Chi tiết
+        </a>
+        <a
+          class="btn btn-warning mx-2"
+          style="color: white"
+          (click)="onEdit(item.maTK)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Sửa thông tin
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

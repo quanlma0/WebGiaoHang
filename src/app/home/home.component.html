@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div
   class="site-blocks-cover overlay"
   style="background-image: url(assets/images/hero_bg_1.jpg)"
@@ -14,7 +15,7 @@
         </h1>
         <p>
           <a
-            href="#"
+            routerLink="/giaongay"
             class="btn py-3 px-5 text-white"
             style="background-color: orange"
             >Giao Ngay!</a
@@ -46,36 +47,13 @@
         <h2 class="my-4 heading text-center">
           Đăng nhập và áp dụng khuyến mãi
         </h2>
-        <form method="post">
-          <div class="form-group">
-            <label for="fq_name">Name</label>
-            <input
-              type="text"
-              class="form-control btn-block"
-              id="fq_name"
-              name="fq_name"
-              placeholder="Enter Name"
-            />
-          </div>
-          <div class="form-group mb-4">
-            <label for="fq_email">Email</label>
-            <input
-              type="text"
-              class="form-control btn-block"
-              id="fq_email"
-              name="fq_email"
-              placeholder="Enter Email"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="submit"
-              class="btn text-white py-2 px-4 btn-block"
-              value="Đăng nhập"
-              style="background-color: orange"
-            />
-          </div>
-        </form>
+        <button
+          class="btn text-white py-2 px-4 btn-block"
+          style="background-color: orange"
+          routerLink="/login"
+        >
+          Đăng nhập
+        </button>
       </div>
     </div>
     <div class="col-md-4">
@@ -508,3 +486,4 @@
     </div>
   </div>
 </div>
+<app-footer></app-footer>

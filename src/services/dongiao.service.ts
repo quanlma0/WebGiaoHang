@@ -11,7 +11,10 @@ export class DGService {
   constructor(private http: HttpClient) { }
 
   getAllDonGiaos(): Observable<DonGiao[]> {
-    return this.http.get<DonGiao[]>(this.APIUrl + '/dongiao');
+    return this.http.get<DonGiao[]>(this.APIUrl + '/DonGiaos');
   }
-  dongiaos!: DonGiao[]
+
+  addDG(newDonGiao: DonGiao): Observable<DonGiao> {
+    return this.http.post<DonGiao>(this.APIUrl + '/DonGiaos', newDonGiao);
+  }
 }

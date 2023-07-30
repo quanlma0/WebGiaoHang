@@ -17,32 +17,40 @@
         >
           <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
             <li class="has-children">
-              <a href="index.html">Dịch vụ</a>
+              <a href="#">Dịch vụ</a>
               <ul class="dropdown">
                 <li>
-                  <a routerLink="/service/delivery" routerLinkActive="active"
-                    >Giao hàng ngay</a
-                  >
+                  <a routerLink="giaohangngay">Dịch vụ giao hàng ngay</a>
                 </li>
-                <li><a href="#">Dịch vụ xe tài</a></li>
-                <li><a href="#">Đặt giao hàng</a></li>
-                <li><a href="#">Về chúng tôi</a></li>
+                <li><a routerLink="dichvuxetai">Dịch vụ xe tài</a></li>
+                <li><a routerLink="datgiaohang">Đặt giao hàng</a></li>
+                <li><a routerLink="vechungtoi">Về chúng tôi</a></li>
               </ul>
             </li>
             <li class="has-children">
               <a href="#">Khách hàng</a>
               <ul class="dropdown">
-                <li><a href="#">Đăng ký khách hàng mới</a></li>
-                <li><a href="#">Trung tâm hỗ trợ</a></li>
+                <li>
+                  <a routerLink="dangky-khachhang">Đăng ký khách hàng mới</a>
+                </li>
+                <li>
+                  <a routerLink="trungtamhotro-khachhang">Trung tâm hỗ trợ</a>
+                </li>
               </ul>
             </li>
 
             <li class="has-children">
               <a href="#">Tài xế</a>
               <ul class="dropdown">
-                <li><a href="#">Đăng ký tài xế mới</a></li>
-                <li><a href="#">Cẩm nang tài xế</a></li>
-                <li><a href="#">Trung tâm hỗ trợ</a></li>
+                <li>
+                  <a routerLink="dangky-taixe" routerLinkActive="active"
+                    >Đăng ký tài xế mới</a
+                  >
+                </li>
+                <li><a routerLink="camnangtaixe">Cẩm nang tài xế</a></li>
+                <li>
+                  <a routerLink="trungtamhotro-taixe">Trung tâm hỗ trợ</a>
+                </li>
               </ul>
             </li>
 

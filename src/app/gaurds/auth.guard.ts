@@ -13,10 +13,10 @@ export class AuthGuard implements CanActivate {
   canActivate() {
     if (this.usService.isLoggedIn()) {
       // Token tồn tại, đã đăng nhập
-      this.toastr.success("Đăng nhập thành công", "Thông báo", {
-        progressBar: true,
-        newestOnTop: true
-      })
+      // this.toastr.success("Đăng nhập thành công", "Thông báo", {
+      //   progressBar: true,
+      //   newestOnTop: true
+      // })
       return true;
     } else {
       // Token không tồn tại, chưa đăng nhập

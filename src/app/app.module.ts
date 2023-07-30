@@ -8,7 +8,6 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DeliveryComponent } from './service/delivery/delivery.component';
 import { LHGService } from 'src/services/loaihanggiao.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { QuanlygiaohangComponent } from './admin/quanlygiaohang/quanlygiaohang.component';
@@ -34,6 +33,16 @@ import { RegisterComponent } from './user/register/register.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { GiaongayComponent } from './giaongay/giaongay.component';
 import { KHService } from 'src/services/khachhang.service';
+import { HomeStartComponent } from './home/home-start/home-start.component';
+import { DangkyTaixeComponent } from './home/dangky-taixe/dangky-taixe.component';
+import { DangkyKhachhangComponent } from './home/dangky-khachhang/dangky-khachhang.component';
+import { GiaohangngayComponent } from './home/giaohangngay/giaohangngay.component';
+import { DichvuxetaiComponent } from './home/dichvuxetai/dichvuxetai.component';
+import { DatgiaohangComponent } from './home/datgiaohang/datgiaohang.component';
+import { VechungtoiComponent } from './home/vechungtoi/vechungtoi.component';
+import { TrungtamhotroKhachhangComponent } from './home/trungtamhotro-khachhang/trungtamhotro-khachhang.component';
+import { TrungtamhotroTaixeComponent } from './home/trungtamhotro-taixe/trungtamhotro-taixe.component';
+import { CamnangtaixeComponent } from './home/camnangtaixe/camnangtaixe.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +50,6 @@ import { KHService } from 'src/services/khachhang.service';
     FooterComponent,
     HomeComponent,
     AdminComponent,
-    DeliveryComponent,
     QuanlygiaohangComponent,
     QlghListComponent,
     QlghEditComponent,
@@ -58,6 +66,16 @@ import { KHService } from 'src/services/khachhang.service';
     LoginComponent,
     RegisterComponent,
     GiaongayComponent,
+    HomeStartComponent,
+    DangkyTaixeComponent,
+    DangkyKhachhangComponent,
+    GiaohangngayComponent,
+    DichvuxetaiComponent,
+    DatgiaohangComponent,
+    VechungtoiComponent,
+    TrungtamhotroKhachhangComponent,
+    TrungtamhotroTaixeComponent,
+    CamnangtaixeComponent,
   ],
   imports: [
     BrowserModule,

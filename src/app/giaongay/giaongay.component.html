@@ -1,20 +1,11 @@
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <!-- Tabs Titles -->
+<!-- <div style="background-color: orange"> -->
+<body>
+  <img src="assets/images/delivery.png" />
+  <div class="login-box">
     <h1>Tiến Hành Giao Hàng</h1>
-    <!-- Icon -->
-    <div class="fadeIn first">
-      <img
-        src="assets/images/hero_bg_4.jpg "
-        width="300"
-        height="300"
-        style="border-radius: 30px"
-      />
-    </div>
-
-    <form [formGroup]="f" (ngSubmit)="GiaoNgay()" style="padding: 30px">
-      <div class="row gx-3 mb-3">
-        <div class="col-md-6">
+    <form [formGroup]="f" (ngSubmit)="GiaoNgay()">
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="tenNguoiGui">Họ Tên Nguời Gửi</span>
           <input
             type="text"
@@ -38,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="user-box">
           <span class="small mb-1" for="sdtNguoiGui">SĐT Nguời Gửi</span>
           <input
             type="text"
@@ -69,9 +60,8 @@
           </div>
         </div>
       </div>
-
-      <div class="row gx-3 mb-3">
-        <div class="col-md-6">
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="tenNguoiNhan">Họ Tên Người Nhận</span>
           <input
             type="text"
@@ -83,7 +73,8 @@
           <div
             *ngIf="
               f.controls['tenNguoiNhan'].invalid &&
-              (f.controls['tenNguoiNhan'].dirty || f.controls['tenNguoiNhan'].touched)
+              (f.controls['tenNguoiNhan'].dirty ||
+                f.controls['tenNguoiNhan'].touched)
             "
           >
             <div
@@ -94,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="user-box">
           <span class="small mb-1" for="sdtNguoiNhan">SĐT Người Nhận</span>
           <input
             type="text"
@@ -106,7 +97,8 @@
           <div
             *ngIf="
               f.controls['sdtNguoiNhan'].invalid &&
-              (f.controls['sdtNguoiNhan'].dirty || f.controls['sdtNguoiNhan'].touched)
+              (f.controls['sdtNguoiNhan'].dirty ||
+                f.controls['sdtNguoiNhan'].touched)
             "
           >
             <div
@@ -124,9 +116,8 @@
           </div>
         </div>
       </div>
-
-      <div class="row gx-3 mb-3">
-        <div class="col-md-4">
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="diaChiGiao">Địa Chỉ Giao</span>
           <input
             type="text"
@@ -150,7 +141,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="user-box">
           <span class="small mb-1" for="diaChiNhan">Địa Chỉ Nhận</span>
           <input
             type="text"
@@ -174,7 +165,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+      </div>
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="khoangCach">Khoảng Cách</span>
           <input
             type="text"
@@ -184,31 +177,7 @@
             formControlName="khoangCach"
           />
         </div>
-      </div>
-
-      <div class="row gx-3 mb-3">
-        <div class="col-md-4">
-          <span class="small mb-1" for="pttt">Phương thức thanh toán</span>
-          <select class="form-control" formControlName="pttt">
-            <option *ngFor="let item of pttt" [value]="item.maPTTT">
-              {{ item.tenPTTT }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              f.controls['pttt'].invalid &&
-              (f.controls['pttt'].dirty || f.controls['pttt'].touched)
-            "
-          >
-            <div
-              style="color: red"
-              *ngIf="f.controls['pttt'].hasError('required')"
-            >
-              Chưa chọn phương thức thanh toán
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="user-box">
           <span class="small mb-1" for="ptvc">Phương thức vận chuyển</span>
           <select class="form-control" formControlName="ptvc">
             <option *ngFor="let item of ptvc" [value]="item.maPTVC">
@@ -229,7 +198,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+      </div>
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="ptgh">Phương thức giao hàng</span>
           <select class="form-control" formControlName="ptgh">
             <option *ngFor="let item of ptgh" [value]="item.maPTGH">
@@ -250,10 +221,31 @@
             </div>
           </div>
         </div>
+        <div class="user-box">
+          <span class="small mb-1" for="pttt">Phương thức thanh toán</span>
+          <select class="form-control" formControlName="pttt">
+            <option *ngFor="let item of pttt" [value]="item.maPTTT">
+              {{ item.tenPTTT }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['pttt'].invalid &&
+              (f.controls['pttt'].dirty || f.controls['pttt'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['pttt'].hasError('required')"
+            >
+              Chưa chọn phương thức thanh toán
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="row gx-3 mb-3">
-        <div class="col-md-6">
+      <div class="user-box1">
+        <div class="user-box">
           <span class="small mb-1" for="km">Khuyến mãi %</span>
           <select class="form-control" formControlName="km">
             <option *ngFor="let item of km" [value]="item.maKM">
@@ -261,22 +253,28 @@
             </option>
           </select>
         </div>
-        <div class="col-md-6">
-          <span class="small mb-1" for="tt">Tổng tiền</span>
-          <input
-            type="text"
-            class="form-control"
-            id="tt"
-            name="tt"
-            formControlName="tt"
-          />
-        </div>
+      <div class="user-box">
+        <span class="small mb-1">Tổng tiền</span>
+        <input
+          type="text"
+          class="form-control"
+          id="tt"
+          name="tt"
+          formControlName="tt"
+        />
       </div>
+    </div>
 
-      <button *ngIf="!processing" type="submit" class="btn btn-primary">
-        Giao Ngay
+      <button
+        class="d-flex justify-content-center"
+        *ngIf="!processing"
+        type="submit"
+      >
+        <span class="transition"></span>
+        <span class="gradient"></span>
+        <span class="label">Giao ngay !</span>
       </button>
       <p *ngIf="processing">Đăng tải...</p>
     </form>
   </div>
-</div>
+</body>

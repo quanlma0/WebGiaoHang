@@ -9,6 +9,8 @@ import { LHGService } from 'src/services/loaihanggiao.service';
   styleUrls: ['./quanlygiaohang.component.css']
 })
 export class QuanlygiaohangComponent implements OnInit {
+  // Bỏ
+
   constructor(private router: Router,
     private route: ActivatedRoute) { }
 

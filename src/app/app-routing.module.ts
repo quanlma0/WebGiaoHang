@@ -9,8 +9,6 @@ import { QuanlydongiaoComponent } from './admin/quanlydongiao/quanlydongiao.comp
 import { TaotaikhoannhanvienComponent } from './admin/taotaikhoannhanvien/taotaikhoannhanvien.component';
 import { XuatkhoComponent } from './admin/xuatkho/xuatkho.component';
 import { NhapkhoComponent } from './admin/nhapkho/nhapkho.component';
-import { QuanlytaikhoanComponent } from './admin/quanlytaikhoan/quanlytaikhoan.component';
-import { QltkDetailComponent } from './admin/quanlytaikhoan/qltk-detail/qltk-detail.component';
 import { TtknvEditComponent } from './admin/taotaikhoannhanvien/ttknv-edit/ttknv-edit.component';
 import { TtknvDetailComponent } from './admin/taotaikhoannhanvien/ttknv-detail/ttknv-detail.component';
 import { LoginComponent } from './user/login/login.component';
@@ -27,22 +25,29 @@ import { GiaohangngayComponent } from './home/giaohangngay/giaohangngay.componen
 import { DichvuxetaiComponent } from './home/dichvuxetai/dichvuxetai.component';
 import { DatgiaohangComponent } from './home/datgiaohang/datgiaohang.component';
 import { VechungtoiComponent } from './home/vechungtoi/vechungtoi.component';
+import { RegisterTaixeComponent } from './user/register-taixe/register-taixe.component';
+import { khachhangGuard } from './gaurds/khachhang.guard';
+import { DsKhachhangComponent } from './admin/ds-khachhang/ds-khachhang.component';
+import { DskhDetailComponent } from './admin/ds-khachhang/dskh-detail/dskh-detail.component';
+import { QldgEditComponent } from './admin/quanlydongiao/qldg-edit/qldg-edit.component';
+import { QldgDetailComponent } from './admin/quanlydongiao/qldg-detail/qldg-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
-      { path: 'quanlygiaohang', component: QuanlygiaohangComponent },
-      { path: 'quanlygiaohang/add', component: QlghEditComponent },
-      { path: 'quanlygiaohang/:id/edit', component: QlghEditComponent },
-      { path: 'quanlygiaohang/:id/delete', component: QlghDeleteComponent },
       { path: 'quanlydongiao', component: QuanlydongiaoComponent },
-      { path: 'quanlytaikhoan', component: QuanlytaikhoanComponent },
-      { path: 'quanlytaikhoan/:id/detail', component: QltkDetailComponent },
+      { path: 'quanlydongiao/:id/detail', component: QldgDetailComponent },
+      { path: 'quanlydongiao/:id/edit', component: QldgEditComponent },
+
+      { path: 'ds-khachhang', component: DsKhachhangComponent },
+      { path: 'ds-khachhang/:id/detail', component: DskhDetailComponent },
+
       { path: 'taotaikhoannhanvien', component: TaotaikhoannhanvienComponent },
       { path: 'taotaikhoannhanvien/add', component: TtknvEditComponent },
       { path: 'taotaikhoannhanvien/:id/detail', component: TtknvDetailComponent },
       { path: 'taotaikhoannhanvien/:id/edit', component: TtknvEditComponent },
+
       { path: 'nhapkho', component: NhapkhoComponent },
       { path: 'xuatkho', component: XuatkhoComponent },
     ]
@@ -64,7 +69,8 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'giaongay', canActivate: [AuthGuard], component: GiaongayComponent },
+  { path: 'register-taixe', component: RegisterTaixeComponent },
+  { path: 'giaongay', canActivate: [khachhangGuard], component: GiaongayComponent },
 
 
 

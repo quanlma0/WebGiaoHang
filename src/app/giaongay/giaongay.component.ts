@@ -69,12 +69,6 @@ export class GiaongayComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.dgService.getAllDonGiaos().subscribe(x => {
-    //   this.tatcadongiao = x
-    //   console.log("aaaaa")
-    //   console.log(this.tatcadongiao)
-    // })
-
     //Xử lý với token
     this.usStore.getEmailFromStore()
       .subscribe((value: string) => {
@@ -107,10 +101,6 @@ export class GiaongayComponent implements OnInit {
     this.ptService.getAllPTGH().subscribe({
       next: (listData) => {
         this.ptgh = listData
-
-        // cách set giá trị mặt định cho FormGroup
-        // this.ptgh_md = this.ptgh[0].tenPTGH
-        // console.log(this.ptgh[0])
       },
       error: (err) => {
         console.log(err)
@@ -134,7 +124,7 @@ export class GiaongayComponent implements OnInit {
     });
 
 
-    console.log(this.thongtinTK)
+    // console.log(this.thongtinTK)
     // console.log(this.thongtinTK.hoTen)
     this.f = new FormGroup({
       tenNguoiGui: new FormControl(this.thongtinTK.hoTen, Validators.required),
@@ -156,13 +146,8 @@ export class GiaongayComponent implements OnInit {
   }
 
   GiaoNgay() {
-    // this.processing = true;
+    this.processing = true;
     const value = this.f.value
-    // console.log(value.ptgh)
-    // console.log("XXXXXXXXXXXXX")
-    // console.log(value.ptvc)
-    // console.log(value.pttt)
-    // console.log(value.km)
 
     this.khachhang_hientai.taiKhoan = this.taikhoang_hientai
     console.log(this.khachhang_hientai)
@@ -170,13 +155,15 @@ export class GiaongayComponent implements OnInit {
 
     const pttt_chon = new PhuongThucTT(0, "")
     const ptgh_chon = new PhuongThucGH(0, "", 0)
+    const ptvc_chon = new PhuongThucVC(0, "")
     const km_chon = new KhuyenMai(0, 0, "", "", "", 0, 0)
-    
+
     //format input ngày về dạng yyyymmdd
     const ngay_hientai = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
     this.dongiao = new DonGiao(0, 'Chờ Xác Nhận', value.diaChiGiao, value.diaChiNhan, value.khoangCach, ngay_hientai, ngay_hientai,
-      0, value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, value.tt, this.khachhang_hientai.maKH, this.khachhang_hientai, value.pttt, pttt_chon, value.ptgh, ptgh_chon,
+      0, value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, value.tt, this.khachhang_hientai.maKH, this.khachhang_hientai, 
+      value.pttt, pttt_chon, value.ptgh, ptgh_chon, value.ptvc, ptvc_chon,
       value.km, km_chon)
 
     console.log(JSON.stringify(this.dongiao))

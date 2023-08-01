@@ -1,40 +1,16 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <!-- Tabs Titles -->
-    <h1>Đăng Ký Khách Hàng</h1>
+    <h1>Đăng Ký Tài Xế</h1>
     <!-- Icon -->
     <div class="fadeIn first">
-      <img src="assets/images/signup-image.jpg" alt="sing up image" />
+      <img src="/assets/images/img_3.jpg" alt="sing up image" width="400px" height="400px" style="border-radius: 30px;"/>
     </div>
-
     <form [formGroup]="f" (ngSubmit)="Register()" style="padding: 30px">
-      <div class="mb-3">
-        <span class="row mb-1" for="hoTen">Họ Tên</span>
-        <input
-          type="text"
-          class="form-control"
-          id="hoTen"
-          name="hoTen"
-          formControlName="hoTen"
-        />
-        <div
-          *ngIf="
-            f.controls['hoTen'].invalid &&
-            (f.controls['hoTen'].dirty || f.controls['hoTen'].touched)
-          "
-        >
-          <div
-            style="color: red"
-            *ngIf="f.controls['hoTen'].hasError('required')"
-          >
-            Chưa nhập Họ Tên
-          </div>
-        </div>
-      </div>
       <div class="mb-3">
         <span class="row mb-1" for="email">Email</span>
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="email"
           name="email"
@@ -50,10 +26,13 @@
             style="color: red"
             *ngIf="f.controls['email'].hasError('required')"
           >
-            Chưa nhập email
+            Chưa nhập Email
           </div>
-          <div style="color: red" *ngIf="f.controls['email'].hasError('email')">
-            email sai định dạng
+          <div
+            style="color: red"
+            *ngIf="f.controls['email'].hasError('email')"
+          >
+            Email sai định dạng
           </div>
         </div>
       </div>
@@ -86,6 +65,97 @@
           </div>
         </div>
       </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="maBangLai">Mã bằng lái xe</span>
+        <input
+          type="text"
+          class="form-control"
+          id="maBangLai"
+          name="maBangLai"
+          formControlName="maBangLai"
+        />
+        <div
+          *ngIf="
+            f.controls['maBangLai'].invalid &&
+            (f.controls['maBangLai'].dirty || f.controls['maBangLai'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['maBangLai'].hasError('required')"
+          >
+            Chưa nhập Mã bằng lái
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="tenPhuongTien">Tên phương tiện</span>
+        <input
+          type="tenPhuongTien"
+          class="form-control"
+          id="tenPhuongTien"
+          name="tenPhuongTien"
+          formControlName="tenPhuongTien"
+        />
+        <div
+          *ngIf="
+            f.controls['tenPhuongTien'].invalid &&
+            (f.controls['tenPhuongTien'].dirty || f.controls['tenPhuongTien'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['tenPhuongTien'].hasError('required')"
+          >
+            Chưa nhập tên phương tiên
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="ptvc">Phương thức vận chuyển</span>
+        <select class="form-control" formControlName="ptvc">
+          <option *ngFor="let item of ptvc" [value]="item.maPTVC">
+            {{ item.tenPTVC }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            f.controls['ptvc'].invalid &&
+            (f.controls['ptvc'].dirty || f.controls['ptvc'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['ptvc'].hasError('required')"
+          >
+            Chưa chọn phương thức vận chuyển
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="row mb-1" for="hoTen">Họ Tên</span>
+        <input
+          type="text"
+          class="form-control"
+          id="hoTen"
+          name="hoTen"
+          formControlName="hoTen"
+        />
+        <div
+          *ngIf="
+            f.controls['hoTen'].invalid &&
+            (f.controls['hoTen'].dirty || f.controls['hoTen'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['hoTen'].hasError('required')"
+          >
+            Chưa nhập Họ Tên
+          </div>
+        </div>
+      </div>
+      
       <div class="mb-3">
         <span class="row mb-1" for="sdt">Số Điện Thoại</span>
         <input

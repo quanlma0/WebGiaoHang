@@ -165,7 +165,8 @@
       <div class="row gx-3 mb-3">
         <div class="col-md-4">
           <span for="gioiTinh">Giới Tính</span>
-          <select class="form-control" formControlName="gioiTinh">
+          <select
+          class="form-control" formControlName="gioiTinh">
             <option *ngFor="let gt of gioitinh" [value]="gt">{{ gt }}</option>
           </select>
           <div
@@ -184,8 +185,11 @@
         </div>
         <div class="col-md-4">
           <span for="tenCV">Chức Vụ</span>
-          <select class="form-control" formControlName="tenCV">
-            <option *ngFor="let cv of chucvu" [value]="cv">{{ cv }}</option>
+          <select
+          class="form-control" formControlName="tenCV">
+            <option *ngFor="let cv of chucvu" [value]="cv.tenCV">
+              {{ cv.tenCV }}
+            </option>
           </select>
           <div
             *ngIf="

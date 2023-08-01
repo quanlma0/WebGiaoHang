@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ChucVu } from 'src/app/models/chucVu';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { User } from 'src/app/models/user';
 import { TKService } from 'src/services/taikhoan.service';
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   f!: FormGroup
   user!: User
   processing = false;
-  taiKhoan = new TaiKhoan(0, "", "", "", "", "", "", "", "", "", "")
+  taiKhoan!: TaiKhoan
   thongtinTK!: TaiKhoan
   constructor(private route: ActivatedRoute,
     private usService: USService,
@@ -38,17 +39,19 @@ export class LoginComponent implements OnInit {
     this.processing = true;
     const value = this.f.value
     // console.log(value.email)
+    var cv = new ChucVu(0, "")
     this.tkService.getTKFromEmail(value.email)
       .subscribe({
         next: (tk) => {
           this.taiKhoan = tk
           this.taiKhoan.maTK = 0
+          this.taiKhoan.chucvu = cv
           //Lưu thông tin Tài Khoản US đã login
           this.usStore.setTTTKFromStore(tk)
 
           this.user = new User(0, value.email, value.matKhau, "", this.taiKhoan)
-          // console.log(this.taiKhoan)
-          // console.log(this.user)
+          // console.log(JSON.stringify(this.user))
+
           this.usService.logIn(this.user)
             .subscribe({
               next: (res) => {
@@ -63,11 +66,32 @@ export class LoginComponent implements OnInit {
                 this.usStore.setRoleForStore(tokenPayload.role)
                 this.usStore.setEmailForStore(tokenPayload.email)
 
-                this.router.navigate(['/home'], { relativeTo: this.route })
-                this.toastr.success("Đăng nhập thành công", "Thông báo", {
-                  progressBar: true,
-                  newestOnTop: true
-                })
+                const TenCV = tokenPayload.role
+                console.log(tokenPayload)
+                if (TenCV === "Admin") {
+                  this.router.navigate(['/admin'], { relativeTo: this.route })
+                  this.toastr.success("Đăng nhập thành công", "Thông báo", {
+                    progressBar: true,
+                    newestOnTop: true
+                  })
+                }
+                else if (TenCV === "NhanVienKho") {
+
+                }
+                else if (TenCV === "TaiXe") {
+                  this.router.navigate(['/home'], { relativeTo: this.route })
+                  this.toastr.success("Đăng nhập thành công", "Thông báo", {
+                    progressBar: true,
+                    newestOnTop: true
+                  })
+                } else {
+                  //KhachHang
+                  this.router.navigate(['/home'], { relativeTo: this.route })
+                  this.toastr.success("Đăng nhập thành công", "Thông báo", {
+                    progressBar: true,
+                    newestOnTop: true
+                  })
+                }
               },
               error: (err) => {
                 this.processing = false;

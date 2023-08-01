@@ -7,11 +7,11 @@ import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { TKService } from 'src/services/taikhoan.service';
 
 @Component({
-  selector: 'app-qltk-detail',
-  templateUrl: './qltk-detail.component.html',
-  styleUrls: ['./qltk-detail.component.css']
+  selector: 'app-dskh-detail',
+  templateUrl: './dskh-detail.component.html',
+  styleUrls: ['./dskh-detail.component.css']
 })
-export class QltkDetailComponent implements OnInit {
+export class DskhDetailComponent implements OnInit {
   id!: number;
   taiKhoan!: TaiKhoan;
   @ViewChild('f')
@@ -32,6 +32,20 @@ export class QltkDetailComponent implements OnInit {
       this.tkService.getTK(this.id).subscribe({
         next: (response) => {
           this.taiKhoan = response;
+          const maCV = this.taiKhoan.maCV
+          var tenCV = ''
+          if (maCV === 1) {
+            tenCV = "Admin"
+          }
+          else if (maCV === 2) {
+            tenCV = "KhachHang"
+          }
+          else if (maCV === 3) {
+            tenCV = "TaiXe"
+          }
+          else {
+            tenCV = "NhanVienKho"
+          }
           this.form.setValue({
             maTK: this.taiKhoan.maTK,
             email: this.taiKhoan.email,
@@ -42,7 +56,7 @@ export class QltkDetailComponent implements OnInit {
             ngaySinh: formatDate(this.taiKhoan.ngaySinh, 'yyyy-MM-dd', 'en-US'),
             hoTen: this.taiKhoan.hoTen,
             trangThaiTK: this.taiKhoan.trangThaiTK,
-            tenCV: this.taiKhoan.tenCV,
+            tenCV: tenCV,
           })
         },
         error(err) {
@@ -52,6 +66,6 @@ export class QltkDetailComponent implements OnInit {
     }
   }
   onBack() {
-    this.router.navigate(['/admin/quanlytaikhoan'], { relativeTo: this.route })
+    this.router.navigate(['/admin/ds-khachhang'], { relativeTo: this.route })
   }
 }

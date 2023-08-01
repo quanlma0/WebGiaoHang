@@ -22,16 +22,15 @@ export class TtknvDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.f = new FormGroup({
-      maTK: new FormControl(null, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      matKhau: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-      sdt: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
-      gioiTinh: new FormControl(null, Validators.required),
-      diaChi: new FormControl(null, Validators.required),
-      ngaySinh: new FormControl(null, Validators.required),
-      hoTen: new FormControl(null, Validators.required),
-      trangThaiTK: new FormControl(null, Validators.required),
-      tenCV: new FormControl(null, Validators.required),
+      email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
+      matKhau: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(8)]),
+      sdt: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
+      gioiTinh: new FormControl({ value: '', disabled: true }, Validators.required),
+      diaChi: new FormControl({ value: '', disabled: true }, Validators.required),
+      ngaySinh: new FormControl({ value: '', disabled: true }, Validators.required),
+      hoTen: new FormControl({ value: '', disabled: true }, Validators.required),
+      trangThaiTK: new FormControl({ value: '', disabled: true }, Validators.required),
+      tenCV: new FormControl({ value: '', disabled: true }, Validators.required),
     })
 
 
@@ -45,7 +44,20 @@ export class TtknvDetailComponent implements OnInit {
       this.TKService.getTK(this.id).subscribe({
         next: (response) => {
           this.taiKhoan = response;
-
+          const maCV = this.taiKhoan.maCV
+          var tenCV = ''
+          if (maCV === 1) {
+            tenCV = "Admin"
+          }
+          else if (maCV === 2) {
+            tenCV = "KhachHang"
+          }
+          else if (maCV === 3) {
+            tenCV = "TaiXe"
+          }
+          else {
+            tenCV = "NhanVienKho"
+          }
           this.f.patchValue({
             maTK: this.taiKhoan.maTK,
             email: this.taiKhoan.email,
@@ -56,7 +68,7 @@ export class TtknvDetailComponent implements OnInit {
             ngaySinh: formatDate(this.taiKhoan.ngaySinh, 'yyyy-MM-dd', 'en-US'),
             hoTen: this.taiKhoan.hoTen,
             trangThaiTK: this.taiKhoan.trangThaiTK,
-            tenCV: this.taiKhoan.tenCV,
+            tenCV: tenCV
           })
         },
         error(err) {

@@ -7,8 +7,8 @@
     </tr>
   </thead>
   <tbody>
-    <p *ngIf="!taikhoannvs && processing">Không có tài khoản nhân viên nào!</p>
-    <p *ngIf="!processing">Đang tải...</p>
+    <p *ngIf="!taikhoannvs && !processing">Không có tài khoản nhân viên nào!</p>
+    <p *ngIf="processing">Đang tải...</p>
     <tr *ngFor="let item of taikhoannvs">
       <td width="30%">{{ item.maTK }}</td>
       <td width="50%">{{ item.email }}</td>

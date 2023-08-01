@@ -12,19 +12,27 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     if (this.usService.isLoggedIn()) {
+      //Giải mã token
+      let tokenPayload = this.usService.decodeToken();
+      var TenCV = tokenPayload.role
+      if (TenCV === 'Admin') {
+        return true;
+      }
+
       // Token tồn tại, đã đăng nhập
-      // this.toastr.success("Đăng nhập thành công", "Thông báo", {
-      //   progressBar: true,
-      //   newestOnTop: true
-      // })
-      return true;
-    } else {
-      // Token không tồn tại, chưa đăng nhập
-      this.toastr.error("Hãy đăng nhập để truy cập", "Lỗi Rồi", {
+      this.toastr.error("Bạn không có quyền truy cập", "Lỗi rồi", {
         progressBar: true,
         newestOnTop: true
       })
-      this.router.navigate(['login']);
+      this.router.navigate(['/home']);
+      return false;
+    } else {
+      // Token không tồn tại, chưa đăng nhập
+      this.toastr.error("Bạn chưa đăng nhập", "Thông báo", {
+        progressBar: true,
+        newestOnTop: true
+      })
+      this.router.navigate(['/login']);
       return false;
     }
   }

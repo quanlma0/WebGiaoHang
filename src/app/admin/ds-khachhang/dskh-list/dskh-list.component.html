@@ -7,9 +7,9 @@
     </tr>
   </thead>
   <tbody>
-    <p *ngIf="!taikhoans && processing">Không có tài khoản nào!</p>
-    <p *ngIf="!processing">Đang tải...</p>
-    <tr *ngFor="let item of taikhoans">
+    <p *ngIf="!taikhoans && !processing">Không có tài khoản nào!</p>
+    <p *ngIf="processing">Đang tải...</p>
+    <tr *ngFor="let item of taikhoan_kh">
       <td width="30%">{{ item.maTK }}</td>
       <td width="50%">{{ item.email }}</td>
       <td class="btn-group" role="group">

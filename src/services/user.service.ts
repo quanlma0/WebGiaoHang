@@ -6,6 +6,7 @@ import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { User } from 'src/app/models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserStoreService } from './user-store.service';
+import { KhachHang } from 'src/app/models/khachHang';
 @Injectable({
   providedIn: 'root'
 })

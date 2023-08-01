@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ChucVu } from 'src/app/models/chucVu';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { User } from 'src/app/models/user';
 import { KHService } from 'src/services/khachhang.service';
-import { TKService } from 'src/services/taikhoan.service';
-import { USService } from 'src/services/user.service';
+
 
 @Component({
   selector: 'app-register',
@@ -18,13 +18,10 @@ export class RegisterComponent implements OnInit {
   f!: FormGroup
   khachhang!: User
   taiKhoan!: TaiKhoan
-  chucvu = ["KhachHang", "TaiXe"]
   gioitinh = ["Nam", "Nữ"]
-  // trangthaitk = ["Còn hoạt động", "Chặn hoạt động"]
 
 
   constructor(private route: ActivatedRoute,
-    private TKService: TKService,
     private router: Router,
     private toastr: ToastrService,
     private khService: KHService
@@ -41,21 +38,23 @@ export class RegisterComponent implements OnInit {
       ngaySinh: new FormControl(null, Validators.required),
       hoTen: new FormControl(null, Validators.required),
       trangThaiTK: new FormControl(null, Validators.required),
-      tenCV: new FormControl(null, Validators.required),
     })
   }
 
   Register() {
     this.processing = true;
     const value = this.f.value
+    //Tạo tài khoản khách hàng
+    var cv = new ChucVu(0, "")
     this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
-      value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Còn hoạt động", value.tenCV, "")
+      value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Còn Hoạt Động", 2, cv, "")
 
     //Tạo 1 khách hàng mới
     this.khachhang = new User(0, value.email, value.matKhau, "", this.taiKhoan);
 
-    console.log(this.taiKhoan)
-    console.log(this.khachhang)
+    //Test JSON
+    // console.log(JSON.stringify(this.taiKhoan))
+    // console.log(JSON.stringify(this.khachhang))
 
     this.khService.addKH(this.khachhang)
       .subscribe({
@@ -77,46 +76,7 @@ export class RegisterComponent implements OnInit {
           })
         }
       })
-
-
-    // this.TKService.addTK(this.taiKhoan)
-    //   .subscribe({
-    //     next: (res) => {
-    //       this.toastr.success("Đăng Ký Thành Công", "Thông báo", {
-    //         progressBar: true,
-    //         newestOnTop: true
-    //       })
-    //       // //Add khach hang
-    //       this.khService.addKH(this.khachhang)
-    //         .subscribe({
-    //           next: (res) => {
-    //             this.processing = false;
-    //             this.f.reset()
-    //             this.toastr.success("Đăng Ký Thành Công", "Thông báo", {
-    //               progressBar: true,
-    //               newestOnTop: true
-    //             })
-    //             this.router.navigate(['/login'], { relativeTo: this.route })
-
-    //           },
-    //           error: (err) => {
-    //             this.processing = false;
-    //             this.toastr.error("Lỗi tạo khách hàng mới!", "Thông báo", {
-    //               progressBar: true,
-    //               newestOnTop: true
-    //             })
-    //           }
-    //         })
-    //     },
-    //     error: (err) => {
-    //       this.processing = false;
-    //       console.log()
-    //       this.toastr.error("Tài khoản đã tồn tại!", "Thông báo", {
-    //         progressBar: true,
-    //         newestOnTop: true
-    //       })
-    //     }
-    //   })
-
   }
+
+
 }

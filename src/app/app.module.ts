@@ -19,10 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaotaikhoannhanvienComponent } from './admin/taotaikhoannhanvien/taotaikhoannhanvien.component';
 import { NhapkhoComponent } from './admin/nhapkho/nhapkho.component';
 import { XuatkhoComponent } from './admin/xuatkho/xuatkho.component';
-import { QuanlytaikhoanComponent } from './admin/quanlytaikhoan/quanlytaikhoan.component';
 import { TtknvEditComponent } from './admin/taotaikhoannhanvien/ttknv-edit/ttknv-edit.component';
-import { QltkListComponent } from './admin/quanlytaikhoan/qltk-list/qltk-list.component';
-import { QltkDetailComponent } from './admin/quanlytaikhoan/qltk-detail/qltk-detail.component';
 import { TtknvListComponent } from './admin/taotaikhoannhanvien/ttknv-list/ttknv-list.component';
 import { TtknvDetailComponent } from './admin/taotaikhoannhanvien/ttknv-detail/ttknv-detail.component';
 import { LoginComponent } from './user/login/login.component';
@@ -43,6 +40,12 @@ import { VechungtoiComponent } from './home/vechungtoi/vechungtoi.component';
 import { TrungtamhotroKhachhangComponent } from './home/trungtamhotro-khachhang/trungtamhotro-khachhang.component';
 import { TrungtamhotroTaixeComponent } from './home/trungtamhotro-taixe/trungtamhotro-taixe.component';
 import { CamnangtaixeComponent } from './home/camnangtaixe/camnangtaixe.component';
+import { RegisterTaixeComponent } from './user/register-taixe/register-taixe.component';
+import { DsKhachhangComponent } from './admin/ds-khachhang/ds-khachhang.component';
+import { DskhListComponent } from './admin/ds-khachhang/dskh-list/dskh-list.component';
+import { DskhDetailComponent } from './admin/ds-khachhang/dskh-detail/dskh-detail.component';
+import { QldgEditComponent } from './admin/quanlydongiao/qldg-edit/qldg-edit.component';
+import { QldgDetailComponent } from './admin/quanlydongiao/qldg-detail/qldg-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,10 +60,7 @@ import { CamnangtaixeComponent } from './home/camnangtaixe/camnangtaixe.componen
     TaotaikhoannhanvienComponent,
     NhapkhoComponent,
     XuatkhoComponent,
-    QuanlytaikhoanComponent,
-    QltkListComponent,
     TtknvEditComponent,
-    QltkDetailComponent,
     TtknvListComponent,
     TtknvDetailComponent,
     LoginComponent,
@@ -76,6 +76,12 @@ import { CamnangtaixeComponent } from './home/camnangtaixe/camnangtaixe.componen
     TrungtamhotroKhachhangComponent,
     TrungtamhotroTaixeComponent,
     CamnangtaixeComponent,
+    RegisterTaixeComponent,
+    DsKhachhangComponent,
+    DskhListComponent,
+    DskhDetailComponent,
+    QldgEditComponent,
+    QldgDetailComponent,
   ],
   imports: [
     BrowserModule,

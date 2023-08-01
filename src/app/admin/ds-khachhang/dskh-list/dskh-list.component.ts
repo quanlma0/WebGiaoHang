@@ -4,14 +4,16 @@ import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { TKService } from 'src/services/taikhoan.service';
 
 @Component({
-  selector: 'app-qltk-list',
-  templateUrl: './qltk-list.component.html',
-  styleUrls: ['./qltk-list.component.css']
+  selector: 'app-dskh-list',
+  templateUrl: './dskh-list.component.html',
+  styleUrls: ['./dskh-list.component.css']
 })
-export class QltkListComponent implements OnInit {
+export class DskhListComponent implements OnInit {
   processing = false;
-
   taikhoans!: TaiKhoan[]
+  //Khởi tạo giá trị rỗng cho mảng
+  taikhoan_kh: TaiKhoan[] = []
+
   constructor(private tkService: TKService,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -20,13 +22,16 @@ export class QltkListComponent implements OnInit {
       next: (listData) => {
         this.taikhoans = listData
 
-        this.tkService.taikhoans = listData
-        this.processing = true
-        console.log(this.taikhoans)
+        this.taikhoans.forEach(x => {
+          if (x.maCV === 2) {
+            this.taikhoan_kh.push(x);
+          }
+        });
+        this.processing = false
       },
       error: (err) => {
         console.log(err)
-        this.processing = true
+        this.processing = false
       }
     });
   }

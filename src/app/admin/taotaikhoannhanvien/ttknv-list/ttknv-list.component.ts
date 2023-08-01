@@ -17,21 +17,22 @@ export class TtknvListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute) { }
   ngOnInit(): void {
+  this.processing = true;
+
     this.tkService.getAllTaiKhoans().subscribe({
       next: (listData) => {
         this.taikhoans = listData
 
         this.taikhoans.forEach(x => {
-          if (x.tenCV !== 'KhachHang') {
+          if (x.maCV !== 2) {
             this.taikhoannvs.push(x);
           }
         });
-        this.tkService.taikhoans = listData
-        this.processing = true
+        this.processing = false
       },
       error: (err) => {
         console.log(err)
-        this.processing = true
+        this.processing = false
       }
     });
   }

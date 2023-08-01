@@ -1,5 +1,6 @@
 import { PhuongThucGH } from "./PhuongThucGH";
 import { PhuongThucTT } from "./PhuongThucTT";
+import { PhuongThucVC } from "./PhuongThucVC";
 import { KhachHang } from "./khachHang";
 import { Kho } from "./kho";
 import { KhuyenMai } from "./khuyenMain";
@@ -11,7 +12,8 @@ export class DonGiao {
     public khoangCach: number, public ngayDatGiao: string, public ngayGiaoHang: string, public laDonDatGiao: number, public tenNguoiNhan: string,
     public sdtNguoiNhan: string, public tenNguoiGui: string, public sdtNguoiGui: string,
     public tongTien: number, public maKH: number, public khachHang: KhachHang, public maPTTT: number, public phuongThucTT: PhuongThucTT,
-    public maPTGH: number, public phuongThucGH: PhuongThucGH, public maKM?: number, public khuyenMai?: KhuyenMai, public maTX?: number, public taiXe?: TaiXe,
+    public maPTGH: number, public phuongThucGH: PhuongThucGH, public maPTVC: number, public phuongThucVC: PhuongThucVC,
+    public maKM?: number, public khuyenMai?: KhuyenMai, public maTX?: number, public taiXe?: TaiXe,
     public maKho?: number, public kho?: Kho) {
     this.maDG = maDG,
       this.trangThaiDG = trangThaiDG,
@@ -32,6 +34,8 @@ export class DonGiao {
       this.phuongThucTT = phuongThucTT,
       this.maPTGH = maPTGH,
       this.phuongThucGH = phuongThucGH,
+      this.maPTVC = maPTVC,
+      this.phuongThucVC = phuongThucVC,
       this.maKM = maKM,
       this.khuyenMai = khuyenMai,
       this.maTX = maTX,

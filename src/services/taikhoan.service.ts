@@ -7,8 +7,6 @@ import { TaiKhoan } from 'src/app/models/taiKhoan';
   providedIn: 'root'
 })
 export class TKService {
-  taikhoans!: TaiKhoan[]
-
   readonly APIUrl = "https://localhost:7249/api"
   constructor(private http: HttpClient) { }
 

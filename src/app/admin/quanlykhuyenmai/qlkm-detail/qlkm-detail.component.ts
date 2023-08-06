@@ -45,6 +45,9 @@ export class QlkmDetailComponent implements OnInit {
       this.ptService.getKM(this.id).subscribe({
         next: (response) => {
           this.khuyenmai = response;
+          // console.log(this.khuyenmai.ngayApDung)
+          // console.log(this.khuyenmai.ngayKetThuc)
+
           this.f.patchValue({
             phanTramKM: this.khuyenmai.phanTramKM,
             moTa: this.khuyenmai.moTa,
@@ -68,7 +71,7 @@ export class QlkmDetailComponent implements OnInit {
   chuyenStringVeDate(date: string) {
     const ngay_hientai = date;
     const year = Number(ngay_hientai.slice(0, 4));
-    const month = Number(ngay_hientai.slice(4, 6)) - 1;
+    const month = Number(ngay_hientai.slice(4, 6));
     const day = Number(ngay_hientai.slice(6, 8));
 
     const dateObject = day + '/' + month + '/' + year

@@ -57,7 +57,7 @@ export class QlkmEditComponent implements OnInit {
             phanTramKM: this.khuyenmai.phanTramKM,
             moTa: this.khuyenmai.moTa,
             ngayApDung: this.convertStringToDate(this.khuyenmai.ngayApDung),
-            ngayKetThuc: this.convertStringToDate(this.khuyenmai.ngayApDung),
+            ngayKetThuc: this.convertStringToDate(this.khuyenmai.ngayKetThuc),
             soLuong: this.khuyenmai.soLuong,
             mucTienApDung: this.khuyenmai.mucTienApDung
           })
@@ -110,7 +110,7 @@ export class QlkmEditComponent implements OnInit {
       else {
         //Tạo khuyen mai moi
         //Test
-        console.log(JSON.stringify(this.khuyenmai))
+        // console.log(JSON.stringify(this.khuyenmai))
         this.khuyenmai.maKM = 0
         this.ptService.addKM(this.khuyenmai)
           .subscribe({

@@ -4,7 +4,13 @@
     <h1>Đăng Ký Tài Xế</h1>
     <!-- Icon -->
     <div class="fadeIn first">
-      <img src="/assets/images/img_3.jpg" alt="sing up image" width="400px" height="400px" style="border-radius: 30px;"/>
+      <img
+        src="/assets/images/img_3.jpg"
+        alt="sing up image"
+        width="400px"
+        height="400px"
+        style="border-radius: 30px"
+      />
     </div>
     <form [formGroup]="f" (ngSubmit)="Register()" style="padding: 30px">
       <div class="mb-3">
@@ -28,10 +34,7 @@
           >
             Chưa nhập Email
           </div>
-          <div
-            style="color: red"
-            *ngIf="f.controls['email'].hasError('email')"
-          >
+          <div style="color: red" *ngIf="f.controls['email'].hasError('email')">
             Email sai định dạng
           </div>
         </div>
@@ -100,7 +103,8 @@
         <div
           *ngIf="
             f.controls['tenPhuongTien'].invalid &&
-            (f.controls['tenPhuongTien'].dirty || f.controls['tenPhuongTien'].touched)
+            (f.controls['tenPhuongTien'].dirty ||
+              f.controls['tenPhuongTien'].touched)
           "
         >
           <div
@@ -155,7 +159,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="mb-3">
         <span class="row mb-1" for="sdt">Số Điện Thoại</span>
         <input
@@ -225,6 +229,12 @@
             *ngIf="f.controls['ngaySinh'].hasError('required')"
           >
             Hãy nhập ngày sinh
+          </div>
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngaySinh'].hasError('underAge')"
+          >
+            Bạn phải đủ 18 tuổi để đăng ký.
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ export class DskhListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute) { }
   ngOnInit(): void {
+    this.processing = true
     this.tkService.getAllTaiKhoans().subscribe({
       next: (listData) => {
         this.taikhoans = listData

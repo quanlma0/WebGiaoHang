@@ -17,7 +17,7 @@ export class TtknvListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute) { }
   ngOnInit(): void {
-  this.processing = true;
+    this.processing = true;
 
     this.tkService.getAllTaiKhoans().subscribe({
       next: (listData) => {
@@ -33,8 +33,11 @@ export class TtknvListComponent implements OnInit {
       error: (err) => {
         console.log(err)
         this.processing = false
+        console.log("XXXXXXXX")
+        console.log(!this.taikhoannvs)
       }
     });
+
   }
 
   onViewDetail(id: number) {
@@ -42,5 +45,8 @@ export class TtknvListComponent implements OnInit {
   }
   onEdit(id: number) {
     this.router.navigate([id, 'edit'], { relativeTo: this.route });
+  }
+  onDelete(id: number){
+    this.router.navigate([id, 'delete'], { relativeTo: this.route });
   }
 }

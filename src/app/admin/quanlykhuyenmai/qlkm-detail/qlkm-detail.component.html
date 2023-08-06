@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">Thông tin khuyến mãi</h1>
+    <form [formGroup]="f">
+      <div class="mb-3">
+        <span class="small mb-1" for="phanTramKM">Phần trăm khuyến mãi</span>
+        <input
+          type="text"
+          class="form-control"
+          id="phanTramKM"
+          name="phanTramKM"
+          formControlName="phanTramKM"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="moTa">Mô tả</span>
+        <input
+          type="moTa"
+          class="form-control"
+          id="moTa"
+          name="moTa"
+          formControlName="moTa"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="ngayApDung">Ngày áp dụng</span>
+        <input
+          type="text"
+          class="form-control"
+          id="ngayApDung"
+          name="ngayApDung"
+          formControlName="ngayApDung"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="ngayKetThuc">Ngày kết thúc</span>
+        <input
+          type="text"
+          class="form-control"
+          id="ngayKetThuc"
+          name="ngayKetThuc"
+          formControlName="ngayKetThuc"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="soLuong">Số lượng</span>
+        <input
+          type="text"
+          class="form-control"
+          id="soLuong"
+          name="soLuong"
+          formControlName="soLuong"
+        />
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="mucTienApDung">Mức tiền áp dụng</span>
+        <input
+          type="text"
+          class="form-control"
+          id="mucTienApDung"
+          name="mucTienApDung"
+          formControlName="mucTienApDung"
+        />
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

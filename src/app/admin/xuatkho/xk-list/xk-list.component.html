@@ -1,0 +1,35 @@
+<span for="kho">Quản lý kho</span>
+<select class="form-control" #khoChon (change)="onKhoSelectChange()">
+  <option *ngFor="let item of khoes" [value]="item.maKho">
+    {{ item.tenKho }}
+  </option>
+</select>
+<table class="table table-bordered table-striped" style="width: 100">
+  <thead>
+    <tr>
+      <th>Mã phiếu</th>
+      <th>Ngày tạo</th>
+      <th>OPTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p *ngIf="!processing && phieuXuatNhap_chon.length === 0">
+      Không có đơn nào trong kho!
+    </p>
+    <p *ngIf="processing">Đang tải...</p>
+    <tr *ngFor="let item of phieuXuatNhap_chon">
+      <td width="30%">{{ item.maPhieu }}</td>
+      <td width="50%">{{ item.ngayTao }}</td>
+      <td class="btn-group" role="group">
+        <a
+          class="btn btn-primary mx-2"
+          style="color: white"
+          (click)="onXuatKho(item.maPhieu)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Xuất Kho
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

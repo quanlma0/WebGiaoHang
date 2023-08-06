@@ -1,0 +1,45 @@
+<table class="table table-bordered table-striped" style="width: 100">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Phần trăm KM</th>
+      <th>Mức tiền áp dụng</th>
+      <th>OPTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p *ngIf="!processing && !km">Không có khuyến mãi nào!</p>
+    <p *ngIf="processing">Đang tải...</p>
+    <tr *ngFor="let item of km">
+      <td width="20%">{{ item.maKM }}</td>
+      <td width="15%">{{ item.phanTramKM }}</td>
+      <td width="15%">{{ item.mucTienApDung }}</td>
+      <td class="btn-group" role="group">
+        <a
+          class="btn btn-primary mx-2"
+          style="color: white"
+          (click)="onViewDetail(item.maKM)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Chi tiết
+        </a>
+        <a
+          class="btn btn-warning mx-2"
+          style="color: white"
+          (click)="onEdit(item.maKM)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Sửa
+        </a>
+        <a
+          class="btn btn-danger mx-2"
+          style="color: white"
+          (click)="onDelete(item.maKM)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Xoá
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

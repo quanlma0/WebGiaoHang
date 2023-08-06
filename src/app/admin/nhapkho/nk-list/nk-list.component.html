@@ -1,0 +1,32 @@
+<table class="table table-bordered table-striped" style="width: 100">
+  <thead>
+    <tr>
+      <th>Mã đơn giao</th>
+      <th>Khách hàng đặt giao</th>
+      <th>Trạng thái đơn giao</th>
+      <th>OPTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p *ngIf="!processing && dongiao_chon.length === 0">Không có đơn giao nào chưa nhập kho!</p>
+    <p *ngIf="processing">Đang tải!</p>
+    <tr *ngFor="let item of dongiao_chon">
+      <td>{{ item.maDG }}</td>
+      <td>{{ getEmailKh(item.maKH) }}</td>
+      <td>{{ item.trangThaiDG }}</td>
+      <td class="btn-group" role="group">
+        <a
+          asp-controller="Category"
+          asp-action="Edit"
+          asp-route-id="@obj.categoryID"
+          class="btn btn-primary mx-2"
+          style="color: white"
+          (click)="onNhapKho(item.maDG)"
+        >
+          <i style="font-size: 17px" class="far">&#xf044;</i>
+          Nhập kho
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

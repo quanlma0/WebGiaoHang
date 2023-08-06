@@ -1,11 +1,15 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChucVu } from 'src/app/models/chucVu';
+import { Kho } from 'src/app/models/kho';
+import { NhanVien } from 'src/app/models/nhanvien';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { ChucvuService } from 'src/services/chucvu.service';
+import { KhoService } from 'src/services/kho.service';
+import { NVService } from 'src/services/nhanvien.service';
 import { TKService } from 'src/services/taikhoan.service';
 
 @Component({
@@ -19,14 +23,19 @@ export class TtknvEditComponent implements OnInit {
   taiKhoan!: TaiKhoan;
   f!: FormGroup
   chucvu!: ChucVu[]
+  chucvu_nv: ChucVu[] = []
   gioitinh = ["Nam", "Nữ"]
-  trangthaitk = ["Còn hoạt động", "Chặn hoạt động"]
+  kho!: Kho[]
+  nhanvien_moi!: NhanVien
 
   constructor(private route: ActivatedRoute,
     private TKService: TKService,
     private router: Router,
     private toastr: ToastrService,
-    private cvService: ChucvuService) {
+    private cvService: ChucvuService,
+    private khoService: KhoService,
+    private nvService: NVService
+  ) {
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       matKhau: new FormControl(null, [Validators.required, Validators.minLength(8)]),
@@ -37,6 +46,7 @@ export class TtknvEditComponent implements OnInit {
       hoTen: new FormControl(null, Validators.required),
       trangThaiTK: new FormControl(null, Validators.required),
       tenCV: new FormControl(null, Validators.required),
+      kho: new FormControl(null)
     })
   }
 
@@ -45,8 +55,21 @@ export class TtknvEditComponent implements OnInit {
       .subscribe({
         next: (value) => {
           this.chucvu = value
+          this.chucvu.forEach(element => {
+            if (element.tenCV != 'KhachHang' && element.tenCV != 'TaiXe') {
+              this.chucvu_nv.push(element)
+            }
+          });
         }
       })
+    this.khoService.getAllKho().subscribe({
+      next: (allKho) => {
+        this.kho = allKho
+      },
+      error(err) {
+        console.log(err)
+      },
+    })
     this.route.params
       .subscribe((params: Params) => {
         this.id = +params['id'];
@@ -62,9 +85,6 @@ export class TtknvEditComponent implements OnInit {
           var tenCV = ''
           if (maCV === 1) {
             tenCV = "Admin"
-          }
-          else if (maCV === 2) {
-            tenCV = "KhachHang"
           }
           else if (maCV === 3) {
             tenCV = "TaiXe"
@@ -82,50 +102,79 @@ export class TtknvEditComponent implements OnInit {
             hoTen: this.taiKhoan.hoTen,
             trangThaiTK: this.taiKhoan.trangThaiTK,
             tenCV: tenCV,
+            kho: this.kho
           })
         },
         error(err) {
         },
       })
-
-      this.f = new FormGroup({
-        email: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.email]),
-        matKhau: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.minLength(8)]),
-        sdt: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
-        gioiTinh: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
-        diaChi: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
-        ngaySinh: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
-        hoTen: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
-        trangThaiTK: new FormControl("", Validators.required),
-        tenCV: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
+    } else {
+      this.f.patchValue({
+        tenCV: this.chucvu_nv,
+        kho: this.kho
       })
     }
+
+    this.f = new FormGroup({
+      email: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.email]),
+      matKhau: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.minLength(8)]),
+      sdt: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
+      gioiTinh: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
+      diaChi: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
+      ngaySinh: new FormControl({ value: '', disabled: this.editMode }, [Validators.required, this.minimumAgeValidator(18)]),
+      hoTen: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
+      trangThaiTK: new FormControl("", Validators.required),
+      tenCV: new FormControl({ value: '', disabled: this.editMode }, Validators.required),
+      kho: new FormControl({ value: '', disabled: this.editMode })
+    })
+
   }
 
 
+  minimumAgeValidator(minimumAge: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value === null || control.value === '') {
+        return null;
+      }
+      const today = new Date();
+      const birthDate = new Date(control.value);
+      const age = today.getFullYear() - birthDate.getFullYear();
+
+      if (age < minimumAge || age >= 70) {
+        return { 'underAge': true };
+      }
+
+      return null;
+    };
+  }
+
   onAddUpdateItem() {
     const value = this.f.value
-    var cv = new ChucVu(0, "")
+    var cv_chon = new ChucVu(0, "")
     var maCV = 0
-    var tenCV = ''
+    var tenCV = value.tenCV
     if (tenCV === "Admin") {
       maCV = 1
     }
     else if (tenCV === "KhachHang") {
       maCV = 2
     }
-    else if (tenCV === "KhachHang") {
-      maCV = 3
-    }
     else {
       maCV = 4
     }
 
+    var maKho = 0;
+    if (value.kho != null) {
+      maKho = value.kho
+    }
 
-    console.log(JSON.stringify(this.taiKhoan))
     if (this.editMode) {
       this.taiKhoan = new TaiKhoan(this.id, this.taiKhoan.email, this.taiKhoan.matKhau, this.taiKhoan.sdt,
-        this.taiKhoan.gioiTinh, this.taiKhoan.diaChi, this.taiKhoan.ngaySinh, this.taiKhoan.hoTen, value.trangThaiTK, maCV, cv, "")
+        this.taiKhoan.gioiTinh, this.taiKhoan.diaChi, this.taiKhoan.ngaySinh, this.taiKhoan.hoTen, value.trangThaiTK, this.taiKhoan.maCV, cv_chon, "")
+
+      //test 
+      // console.log(JSON.stringify(this.taiKhoan))
+
       this.TKService.updateTK(this.id, this.taiKhoan)
         .subscribe({
           next: (tk) => {
@@ -136,7 +185,7 @@ export class TtknvEditComponent implements OnInit {
             })
           },
           error: (err) => {
-            this.toastr.error("Sửa Thất Bại", "Thông báo", {
+            this.toastr.error("Lỗi kết nối!", "Thông báo", {
               progressBar: true,
               newestOnTop: true
             })
@@ -144,25 +193,31 @@ export class TtknvEditComponent implements OnInit {
         });
     }
     else {
-      //Tạo tài khoản nhân viên 
-      // this.taiKhoan = new TaiKhoan(this.id, value.email, value.matKhau, value.sdt,
-      //   value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, value.trangThaiTK, maCV, cv, "")
-      // this.TKService.addTK(this.taiKhoan)
-      //   .subscribe({
-      //     next: (tk) => {
-      //       this.f.reset()
-      //       this.toastr.success("Thêm Thành Công", "Thông báo", {
-      //         progressBar: true,
-      //         newestOnTop: true
-      //       })
-      //     },
-      //     error: (err) => {
-      //       this.toastr.error("Thêm Thất Bại", "Thông báo", {
-      //         progressBar: true,
-      //         newestOnTop: true
-      //       })
-      //     }
-      //   })
+      //Tạo tài khoản nhân viên (Admin, NhanVienKho)
+      var tk_chon = new TaiKhoan(0, value.email, value.matKhau, value.sdt, value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen,
+        value.trangThaiTK, maCV, cv_chon, "")
+      this.nhanvien_moi = new NhanVien(0, value.email, value.matKhau, 0, tk_chon, maKho, new Kho(0, "", ""))
+
+      //Test
+      // console.log(JSON.stringify(this.nhanvien_moi))
+
+      this.nvService.addTKNV(this.nhanvien_moi)
+        .subscribe({
+          next: (tk) => {
+            this.f.reset()
+            this.router.navigate(['/admin/taotaikhoannhanvien'], { relativeTo: this.route })
+            this.toastr.success("Tạo tài khoản NV Thành Công", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+          },
+          error: (err) => {
+            this.toastr.error("Tài khoản đã có!", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+          }
+        })
     }
   }
 

@@ -156,6 +156,12 @@
           >
             Hãy nhập ngày sinh
           </div>
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngaySinh'].hasError('underAge')"
+          >
+            Bạn phải đủ 18 tuổi để đăng ký.
+          </div>
         </div>
       </div>
 

@@ -15,8 +15,12 @@ export class TXService {
     return this.http.post<TaiXe>(this.APIUrl + '/TaiXes', newTX);
   }
 
-  logIn(taixe: TaiXe): Observable<TaiXe> {
-    return this.http.post<TaiXe>(this.APIUrl + '/TaiXes/authenticate', taixe)
+  // logIn(taixe: TaiXe): Observable<TaiXe> {
+  //   return this.http.post<TaiXe>(this.APIUrl + '/TaiXes/authenticate', taixe)
+  // }
+
+  deleteTX(id: number): Observable<TaiXe> {
+    return this.http.delete<TaiXe>(this.APIUrl + '/TaiXes/' + id)
   }
 
 }

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
                 this.usStore.setEmailForStore(tokenPayload.email)
 
                 const TenCV = tokenPayload.role
-                console.log(tokenPayload)
+                // console.log(tokenPayload)
                 if (TenCV === "Admin") {
                   this.router.navigate(['/admin'], { relativeTo: this.route })
                   this.toastr.success("Đăng nhập thành công", "Thông báo", {
@@ -76,7 +76,11 @@ export class LoginComponent implements OnInit {
                   })
                 }
                 else if (TenCV === "NhanVienKho") {
-
+                  this.router.navigate(['/admin'], { relativeTo: this.route })
+                  this.toastr.success("Đăng nhập thành công", "Thông báo", {
+                    progressBar: true,
+                    newestOnTop: true
+                  })
                 }
                 else if (TenCV === "TaiXe") {
                   this.router.navigate(['/home'], { relativeTo: this.route })

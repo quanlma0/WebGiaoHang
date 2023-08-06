@@ -1,4 +1,4 @@
-<!-- <div style="background-color: orange"> -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNQBYFw35foZbaieRnXirTOTL8qyYVQEg&libraries=places"></script> -->
 <body>
   <img src="assets/images/delivery.png" />
   <div class="login-box">
@@ -126,6 +126,9 @@
             name="diaChiGiao"
             formControlName="diaChiGiao"
           />
+          <!-- <mat-form-field>
+            <input #inputF matInput placeholder="Địa chỉ giao" />
+          </mat-form-field> -->
           <div
             *ngIf="
               f.controls['diaChiGiao'].invalid &&
@@ -168,7 +171,7 @@
       </div>
       <div class="user-box1">
         <div class="user-box">
-          <span class="small mb-1" for="khoangCach">Khoảng Cách</span>
+          <span class="small mb-1" for="khoangCach">Khoảng Cách (km)</span>
           <input
             type="text"
             class="form-control"
@@ -248,22 +251,22 @@
         <div class="user-box">
           <span class="small mb-1" for="km">Khuyến mãi %</span>
           <select class="form-control" formControlName="km">
-            <option *ngFor="let item of km" [value]="item.maKM">
+            <option *ngFor="let item of km_apdung" [value]="item.maKM">
               {{ item.phanTramKM }}
             </option>
           </select>
         </div>
-      <div class="user-box">
-        <span class="small mb-1">Tổng tiền</span>
-        <input
-          type="text"
-          class="form-control"
-          id="tt"
-          name="tt"
-          formControlName="tt"
-        />
+        <div class="user-box">
+          <span class="small mb-1">Tổng tiền</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tt"
+            name="tt"
+            formControlName="tt"
+          />
+        </div>
       </div>
-    </div>
 
       <button
         class="d-flex justify-content-center"

@@ -3,13 +3,13 @@ import { PhuongThucTT } from "./PhuongThucTT";
 import { PhuongThucVC } from "./PhuongThucVC";
 import { KhachHang } from "./khachHang";
 import { Kho } from "./kho";
-import { KhuyenMai } from "./khuyenMain";
+import { KhuyenMai } from "./khuyenMai";
 import { TaiXe } from "./taiXe";
 import { User } from "./user";
 
 export class DonGiao {
   constructor(public maDG: number, public trangThaiDG: string, public diaChiGiao: string, public diaChiNhan: string,
-    public khoangCach: number, public ngayDatGiao: string, public ngayGiaoHang: string, public laDonDatGiao: number, public tenNguoiNhan: string,
+    public khoangCach: number, public ngayDatGiao: string, public ngayGiaoHang: string, public tenNguoiNhan: string,
     public sdtNguoiNhan: string, public tenNguoiGui: string, public sdtNguoiGui: string,
     public tongTien: number, public maKH: number, public khachHang: KhachHang, public maPTTT: number, public phuongThucTT: PhuongThucTT,
     public maPTGH: number, public phuongThucGH: PhuongThucGH, public maPTVC: number, public phuongThucVC: PhuongThucVC,
@@ -22,7 +22,6 @@ export class DonGiao {
       this.khoangCach = khoangCach,
       this.ngayDatGiao = ngayDatGiao,
       this.ngayGiaoHang = ngayGiaoHang,
-      this.laDonDatGiao = laDonDatGiao,
       this.tenNguoiNhan = tenNguoiNhan,
       this.sdtNguoiNhan = sdtNguoiNhan,
       this.tenNguoiGui = tenNguoiGui,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChucVu } from 'src/app/models/chucVu';
@@ -35,10 +35,27 @@ export class RegisterComponent implements OnInit {
       sdt: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
       gioiTinh: new FormControl(null, Validators.required),
       diaChi: new FormControl(null, Validators.required),
-      ngaySinh: new FormControl(null, Validators.required),
+      ngaySinh: new FormControl(null, [Validators.required, this.minimumAgeValidator(18)]),
       hoTen: new FormControl(null, Validators.required),
       trangThaiTK: new FormControl(null, Validators.required),
     })
+  }
+
+  minimumAgeValidator(minimumAge: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value === null || control.value === '') {
+        return null;
+      }
+      const today = new Date();
+      const birthDate = new Date(control.value);
+      const age = today.getFullYear() - birthDate.getFullYear();
+  
+      if (age < minimumAge || age >= 70) {
+        return { 'underAge': true };
+      }
+  
+      return null;
+    };
   }
 
   Register() {

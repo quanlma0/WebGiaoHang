@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">Tiến hành nhập kho</h1>
+    <form [formGroup]="f" (ngSubmit)="onNhapKho()">
+      <div class="mb-3">
+        <span for="maDG">Mã đơn giao</span>
+        <input
+          type="text"
+          class="form-control"
+          id="maDG"
+          name="maDG"
+          formControlName="maDG"
+        />
+      </div>
+      <div class="mb-3">
+        <span for="tenNguoiGui">Tên người gửi</span>
+        <input
+          type="text"
+          class="form-control"
+          id="tenNguoiGui"
+          name="tenNguoiGui"
+          formControlName="tenNguoiGui"
+        />
+      </div>
+      <div class="mb-3">
+        <span for="sdtNguoiGui">Số điện thoại người gửi</span>
+        <input
+          type="text"
+          class="form-control"
+          id="sdtNguoiGui"
+          name="sdtNguoiGui"
+          formControlName="sdtNguoiGui"
+        />
+      </div>
+      <div class="mb-3">
+        <span for="diaChiGiao">Địa chỉ giao</span>
+        <input
+          type="text"
+          class="form-control"
+          id="diaChiGiao"
+          name="diaChiGiao"
+          formControlName="diaChiGiao"
+        />
+      </div>
+      <div class="mb-3">
+        <span for="diaChiNhan">Địa chỉ nhận</span>
+        <input
+          type="text"
+          class="form-control"
+          id="diaChiNhan"
+          name="diaChiNhan"
+          formControlName="diaChiNhan"
+        />
+      </div>
+      <div class="mb-3">
+        <span for="kho">Kho</span>
+        <select class="form-control" formControlName="kho">
+          <option *ngFor="let kho of khoes" [value]="kho.maKho">
+            {{ kho.tenKho }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            f.controls['kho'].invalid &&
+            (f.controls['kho'].dirty || f.controls['kho'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['kho'].hasError('required')"
+          >
+            Chưa chọn kho
+          </div>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button type="submit" class="btn btn-primary">Nhập Kho</button>
+
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
-import { QuanlygiaohangComponent } from './admin/quanlygiaohang/quanlygiaohang.component';
-import { QlghEditComponent } from './admin/quanlygiaohang/qlgh-edit/qlgh-edit.component';
-import { QlghDeleteComponent } from './admin/quanlygiaohang/qlgh-delete/qlgh-delete.component';
-import { QuanlydongiaoComponent } from './admin/quanlydongiao/quanlydongiao.component';
 import { TaotaikhoannhanvienComponent } from './admin/taotaikhoannhanvien/taotaikhoannhanvien.component';
 import { XuatkhoComponent } from './admin/xuatkho/xuatkho.component';
 import { NhapkhoComponent } from './admin/nhapkho/nhapkho.component';
@@ -29,16 +25,23 @@ import { RegisterTaixeComponent } from './user/register-taixe/register-taixe.com
 import { khachhangGuard } from './gaurds/khachhang.guard';
 import { DsKhachhangComponent } from './admin/ds-khachhang/ds-khachhang.component';
 import { DskhDetailComponent } from './admin/ds-khachhang/dskh-detail/dskh-detail.component';
-import { QldgEditComponent } from './admin/quanlydongiao/qldg-edit/qldg-edit.component';
-import { QldgDetailComponent } from './admin/quanlydongiao/qldg-detail/qldg-detail.component';
+import { TknvDeleteComponent } from './admin/taotaikhoannhanvien/tknv-delete/tknv-delete.component';
+import { DanhsachdongiaoComponent } from './admin/danhsachdongiao/danhsachdongiao.component';
+import { DsdgDetailComponent } from './admin/danhsachdongiao/dsdg-detail/dsdg-detail.component';
+import { QuanlykhuyenmaiComponent } from './admin/quanlykhuyenmai/quanlykhuyenmai.component';
+import { QlkmEditComponent } from './admin/quanlykhuyenmai/qlkm-edit/qlkm-edit.component';
+import { QlkmDetailComponent } from './admin/quanlykhuyenmai/qlkm-detail/qlkm-detail.component';
+import { QlkmDeleteComponent } from './admin/quanlykhuyenmai/qlkm-delete/qlkm-delete.component';
+import { NkAddComponent } from './admin/nhapkho/nk-add/nk-add.component';
+import { XkAddComponent } from './admin/xuatkho/xk-add/xk-add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'admin', component: AdminComponent, canActivate: [AuthGuard], children: [
-      { path: 'quanlydongiao', component: QuanlydongiaoComponent },
-      { path: 'quanlydongiao/:id/detail', component: QldgDetailComponent },
-      { path: 'quanlydongiao/:id/edit', component: QldgEditComponent },
+      { path: 'danhsachdongiao', component: DanhsachdongiaoComponent },
+      { path: 'danhsachdongiao/:id/detail', component: DsdgDetailComponent },
+
 
       { path: 'ds-khachhang', component: DsKhachhangComponent },
       { path: 'ds-khachhang/:id/detail', component: DskhDetailComponent },
@@ -47,9 +50,20 @@ const routes: Routes = [
       { path: 'taotaikhoannhanvien/add', component: TtknvEditComponent },
       { path: 'taotaikhoannhanvien/:id/detail', component: TtknvDetailComponent },
       { path: 'taotaikhoannhanvien/:id/edit', component: TtknvEditComponent },
+      { path: 'taotaikhoannhanvien/:id/delete', component: TknvDeleteComponent },
+
+      { path: 'quanlykhuyenmai', component: QuanlykhuyenmaiComponent },
+      { path: 'quanlykhuyenmai/add', component: QlkmEditComponent },
+      { path: 'quanlykhuyenmai/:id/detail', component: QlkmDetailComponent },
+      { path: 'quanlykhuyenmai/:id/edit', component: QlkmEditComponent },
+      { path: 'quanlykhuyenmai/:id/delete', component: QlkmDeleteComponent },
+
 
       { path: 'nhapkho', component: NhapkhoComponent },
+      { path: 'nhapkho/:id/add', component: NkAddComponent },
+
       { path: 'xuatkho', component: XuatkhoComponent },
+      { path: 'xuatkho/:id/add', component: XkAddComponent },
     ]
   },
   {

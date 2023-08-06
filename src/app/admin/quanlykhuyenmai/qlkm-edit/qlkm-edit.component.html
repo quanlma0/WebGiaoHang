@@ -1,0 +1,169 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">
+      {{ editMode ? "Cập Nhật khuyến mãi" : "Tạo khuyến mãi" }}
+    </h1>
+    <form [formGroup]="f" (ngSubmit)="onAddUpdateItem()">
+      <div class="mb-3">
+        <span class="small mb-1" for="phanTramKM">Phần trăm khuyến mãi</span>
+        <input
+          type="text"
+          class="form-control"
+          id="phanTramKM"
+          name="phanTramKM"
+          formControlName="phanTramKM"
+        />
+        <div
+          *ngIf="
+            f.controls['phanTramKM'].invalid &&
+            (f.controls['phanTramKM'].dirty || f.controls['phanTramKM'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['phanTramKM'].hasError('required')"
+          >
+            Chưa nhập Phần trăm khuyến
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="moTa">Mô tả</span>
+        <input
+          type="moTa"
+          class="form-control"
+          id="moTa"
+          name="moTa"
+          formControlName="moTa"
+        />
+        <div
+          *ngIf="
+            f.controls['moTa'].invalid &&
+            (f.controls['moTa'].dirty || f.controls['moTa'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['moTa'].hasError('required')"
+          >
+            Chưa nhập Mô Tả
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="ngayApDung">Ngày áp dụng</span>
+        <input
+          type="date"
+          class="form-control"
+          id="ngayApDung"
+          name="ngayApDung"
+          formControlName="ngayApDung"
+        />
+        <div
+          *ngIf="
+            f.controls['ngayApDung'].invalid &&
+            (f.controls['ngayApDung'].dirty || f.controls['ngayApDung'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngayApDung'].hasError('required')"
+          >
+            Chưa nhập ngày áp dụng
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="ngayKetThuc">Ngày kết thúc</span>
+        <input
+          type="date"
+          class="form-control"
+          id="ngayKetThuc"
+          name="ngayKetThuc"
+          formControlName="ngayKetThuc"
+        />
+        <div
+          *ngIf="
+            f.controls['ngayKetThuc'].invalid &&
+            (f.controls['ngayKetThuc'].dirty ||
+              f.controls['ngayKetThuc'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngayKetThuc'].hasError('invalidDateRange')"
+          >
+            Ngày kết thúc phải sau ngày áp dụng.
+          </div>
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngayKetThuc'].hasError('required')"
+          >
+            Chưa nhập ngày kết thúc
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="soLuong">Số lượng</span>
+        <input
+          type="text"
+          class="form-control"
+          id="soLuong"
+          name="soLuong"
+          formControlName="soLuong"
+        />
+        <div
+          *ngIf="
+            f.controls['soLuong'].invalid &&
+            (f.controls['soLuong'].dirty || f.controls['soLuong'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['soLuong'].hasError('required')"
+          >
+            Chưa nhập số lượng
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <span class="small mb-1" for="mucTienApDung">Mức tiền áp dụng</span>
+        <input
+          type="text"
+          class="form-control"
+          id="mucTienApDung"
+          name="mucTienApDung"
+          formControlName="mucTienApDung"
+        />
+        <div
+          *ngIf="
+            f.controls['mucTienApDung'].invalid &&
+            (f.controls['mucTienApDung'].dirty ||
+              f.controls['mucTienApDung'].touched)
+          "
+        >
+          <div
+            style="color: red"
+            *ngIf="f.controls['mucTienApDung'].hasError('required')"
+          >
+            Chưa nhập mức tiền áp dụng
+          </div>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button type="submit" class="btn btn-primary">
+          {{ editMode ? "Thay đổi" : "Thêm" }}
+        </button>
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

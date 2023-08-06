@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PhuongThucVC } from 'src/app/models/PhuongThucVC';
@@ -62,12 +62,29 @@ export class RegisterTaixeComponent implements OnInit {
       sdt: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
       gioiTinh: new FormControl(null, Validators.required),
       diaChi: new FormControl(null, Validators.required),
-      ngaySinh: new FormControl(null, Validators.required),
+      ngaySinh: new FormControl(null, [Validators.required, this.minimumAgeValidator(18)]),
       hoTen: new FormControl(null, Validators.required),
       trangThaiTK: new FormControl(null, Validators.required),
       ptvc: new FormControl(this.ptvc, Validators.required),
     })
   }
+
+minimumAgeValidator(minimumAge: number): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (control.value === null || control.value === '') {
+      return null;
+    }
+    const today = new Date();
+    const birthDate = new Date(control.value);
+    const age = today.getFullYear() - birthDate.getFullYear();
+
+    if (age < minimumAge || age >= 70) {
+      return { 'underAge': true };
+    }
+
+    return null;
+  };
+}
 
   Register() {
     this.processing = true;
@@ -77,13 +94,13 @@ export class RegisterTaixeComponent implements OnInit {
     this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
       value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Chặn Hoạt Động", 3, cv, "")
 
-    var ptvc = new PhuongThucVC(0, "")
+    var ptvc = new PhuongThucVC(0, "", 0)
     //Tạo 1 Tài xế mới
-    this.taiXe = new TaiXe(0, value.maBangLai,value.tenPhuongTien, value.email, value.matKhau, this.taiKhoan, value.ptvc, ptvc, "", 0);
+    this.taiXe = new TaiXe(0, value.maBangLai, value.tenPhuongTien, value.email, value.matKhau, this.taiKhoan, value.ptvc, ptvc, "", 0);
 
     //Test JSON
-    console.log(JSON.stringify(this.taiKhoan))
-    console.log(JSON.stringify(this.taiXe))
+    // console.log(JSON.stringify(this.taiKhoan))
+    // console.log(JSON.stringify(this.taiXe))
 
     this.txService.addTX(this.taiXe)
       .subscribe({

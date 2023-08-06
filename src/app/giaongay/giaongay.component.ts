@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -9,15 +9,14 @@ import { PhuongThucGH } from '../models/PhuongThucGH';
 import { PhuongThucVC } from '../models/PhuongThucVC';
 import { PhuongThucTT } from '../models/PhuongThucTT';
 import { DonGiao } from '../models/donGiao';
-import { KhuyenMai } from '../models/khuyenMain';
+import { KhuyenMai } from '../models/khuyenMai';
 import { TaiKhoan } from '../models/taiKhoan';
 import { DGService } from 'src/services/dongiao.service';
 import { KHService } from 'src/services/khachhang.service';
-import { User } from '../models/user';
-import { TaiXe } from '../models/taiXe';
 import { KhachHang } from '../models/khachHang';
 import { TKService } from 'src/services/taikhoan.service';
-import { Kho } from '../models/kho';
+import { ChucVu } from '../models/chucVu';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-giaongay',
@@ -34,12 +33,14 @@ export class GiaongayComponent implements OnInit {
   pttt!: PhuongThucTT[]
   ptvc!: PhuongThucVC[]
   km!: KhuyenMai[]
+  km_apdung: KhuyenMai[] = []
   dongiao!: DonGiao
   tatcadongiao!: DonGiao[]
-
+  TongTien = 1;
   email_hienTai!: string
   khachhang_hientai!: KhachHang
   taikhoang_hientai!: TaiKhoan
+  currencyPipe!: any
 
   constructor(private route: ActivatedRoute,
     private usService: USService,
@@ -49,7 +50,8 @@ export class GiaongayComponent implements OnInit {
     private ptService: PTService,
     private dgService: DGService,
     private khService: KHService,
-    private tkService: TKService) {
+    private tkService: TKService,
+    private injector: Injector) {
     this.f = new FormGroup({
       tenNguoiGui: new FormControl(null, Validators.required),
       sdtNguoiGui: new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]),
@@ -64,7 +66,7 @@ export class GiaongayComponent implements OnInit {
       km: new FormControl(null),
       tt: new FormControl(null)
     })
-
+    this.currencyPipe = this.injector.get(CurrencyPipe)
 
   }
 
@@ -86,6 +88,7 @@ export class GiaongayComponent implements OnInit {
       })
 
     //Lấy thông tin tk của người dùng đã đăng nhập vào
+    this.thongtinTK = new TaiKhoan(0, '', '', '', '', '', '', '', '', 2, new ChucVu(2, 'KhachHang'), '')
     this.usStore.getTTTKFromStore()
       .subscribe((value) => {
         this.thongtinTK = value
@@ -137,36 +140,96 @@ export class GiaongayComponent implements OnInit {
       pttt: new FormControl(this.pttt, Validators.required),
       ptvc: new FormControl(this.ptvc, Validators.required),
       ptgh: new FormControl(this.ptgh, Validators.required),
-      km: new FormControl(this.km),
+      km: new FormControl(null),
       tt: new FormControl(0)
     })
-
-
+    this.f.get('ptvc')?.valueChanges.subscribe(() => this.tinhTongTien());
+    this.f.get('khoangCach')?.valueChanges.subscribe(() => this.tinhTongTien());
+    this.f.get('km')?.valueChanges.subscribe(() => this.tinhKhuyenMai());
 
   }
 
+  // @ViewChild('inputF')
+  // inputF!: ElementRef
+  // autucomplete: google.maps.places.Autocomplete | undefined
+  // ngAfterViewInit(){
+  //   this.autucomplete = new google.maps.places.Autocomplete(this.inputF.nativeElement)
+  //   this.autucomplete.addListener('place_changed', ()=>{
+  //     const place = this.autucomplete?.getPlace();
+  //     console.log(place)
+  //   });
+  // }
+
+
+  tinhTongTien() {
+    const ma_ptvc = this.f.get('ptvc')?.value;
+    let dongia = 1
+    this.ptvc.forEach(element => {
+      if (element.maPTVC == ma_ptvc) {
+        dongia = element.donGia
+      }
+    });
+    const soKm = this.f.get('khoangCach')?.value;
+    this.TongTien = soKm * dongia
+
+    if (this.TongTien > 0) {
+      this.km_apdung = []
+      this.km.forEach(element => {
+        if (this, this.TongTien >= element.mucTienApDung) {
+          this.km_apdung.push(element)
+        }
+      });
+      this.f.patchValue({
+        km: this.km_apdung
+      })
+    }
+
+    this.f.patchValue({
+      tt: this.currencyPipe.transform(this.TongTien, 'VNĐ', 'symbol', '1.0')
+    })
+  }
+
+  tinhKhuyenMai() {
+    const km_chon = this.f.get('km')?.value
+    let phantramkm_chon = 1;
+    this.km.forEach(element => {
+      if (element.maKM == km_chon) {
+        phantramkm_chon = element.phanTramKM
+      }
+    });
+    const tien_apDungKm = this.TongTien - (this.TongTien * phantramkm_chon * 0.01)
+    this.f.patchValue({
+      tt: this.currencyPipe.transform(tien_apDungKm, 'VNĐ', 'symbol', '1.0')
+    })
+  }
+
+  chuyenVNDveString(VND: any){
+    const numericString = VND.replace(/[^\d.,]/g, ''); 
+    return parseInt(numericString)
+  }
   GiaoNgay() {
     this.processing = true;
     const value = this.f.value
 
     this.khachhang_hientai.taiKhoan = this.taikhoang_hientai
-    console.log(this.khachhang_hientai)
+    // console.log(this.khachhang_hientai)
 
 
     const pttt_chon = new PhuongThucTT(0, "")
-    const ptgh_chon = new PhuongThucGH(0, "", 0)
-    const ptvc_chon = new PhuongThucVC(0, "")
+    const ptgh_chon = new PhuongThucGH(0, "")
+    const ptvc_chon = new PhuongThucVC(0, "", 0)
     const km_chon = new KhuyenMai(0, 0, "", "", "", 0, 0)
-
+    const cv = new ChucVu(2, "KhachHang")
     //format input ngày về dạng yyyymmdd
     const ngay_hientai = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
+    this.khachhang_hientai.taiKhoan.chucvu = cv;
     this.dongiao = new DonGiao(0, 'Chờ Xác Nhận', value.diaChiGiao, value.diaChiNhan, value.khoangCach, ngay_hientai, ngay_hientai,
-      0, value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, value.tt, this.khachhang_hientai.maKH, this.khachhang_hientai, 
+      value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, this.chuyenVNDveString(value.tt)*1000, this.khachhang_hientai.maKH, this.khachhang_hientai,
       value.pttt, pttt_chon, value.ptgh, ptgh_chon, value.ptvc, ptvc_chon,
       value.km, km_chon)
 
-    console.log(JSON.stringify(this.dongiao))
+    // console.log(JSON.stringify(this.dongiao))
 
     if (this.f.valid) {
       this.dgService.addDG(this.dongiao)
@@ -174,7 +237,7 @@ export class GiaongayComponent implements OnInit {
           next: (res) => {
             this.processing = false;
             this.f.reset()
-            console.log(res)
+            // console.log(res)
 
             this.toastr.success("Giao hàng thành công", "", {
               progressBar: true,
@@ -195,6 +258,7 @@ export class GiaongayComponent implements OnInit {
 
     }
     else {
+      this.processing = false;
       this.toastr.warning("Chưa nhập đủ thông tin rồi!", "", {
         progressBar: true,
         newestOnTop: true

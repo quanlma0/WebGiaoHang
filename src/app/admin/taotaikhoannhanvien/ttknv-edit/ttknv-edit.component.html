@@ -62,7 +62,7 @@
         <div class="col-md-6">
           <span for="matKhau">Mật Khẩu</span>
           <input
-            type="password"
+            type="current-password"
             class="form-control"
             id="matKhau"
             name="matKhau"
@@ -159,14 +159,19 @@
           >
             Hãy nhập ngày sinh
           </div>
+          <div
+            style="color: red"
+            *ngIf="f.controls['ngaySinh'].hasError('underAge')"
+          >
+            Bạn phải đủ 18 tuổi để đăng ký.
+          </div>
         </div>
       </div>
 
       <div class="row gx-3 mb-3">
         <div class="col-md-4">
           <span for="gioiTinh">Giới Tính</span>
-          <select
-          class="form-control" formControlName="gioiTinh">
+          <select class="form-control" formControlName="gioiTinh">
             <option *ngFor="let gt of gioitinh" [value]="gt">{{ gt }}</option>
           </select>
           <div
@@ -185,9 +190,8 @@
         </div>
         <div class="col-md-4">
           <span for="tenCV">Chức Vụ</span>
-          <select
-          class="form-control" formControlName="tenCV">
-            <option *ngFor="let cv of chucvu" [value]="cv.tenCV">
+          <select class="form-control" formControlName="tenCV">
+            <option *ngFor="let cv of chucvu_nv" [value]="cv.tenCV">
               {{ cv.tenCV }}
             </option>
           </select>
@@ -223,6 +227,32 @@
               *ngIf="f.controls['trangThaiTK'].hasError('required')"
             >
               Chưa chọn trạng thái tài khoản
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row gx-3 mb-3"
+        *ngIf="f.get('tenCV')!.value === 'NhanVienKho'"
+      >
+        <div class="col-md-4">
+          <span for="kho">Quản lý kho</span>
+          <select class="form-control" formControlName="kho">
+            <option *ngFor="let item of kho" [value]="item.maKho">
+              {{ item.tenKho }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              f.controls['kho'].invalid &&
+              (f.controls['kho'].dirty || f.controls['kho'].touched)
+            "
+          >
+            <div
+              style="color: red"
+              *ngIf="f.controls['kho'].hasError('required')"
+            >
+              Chưa chọn kho của nhân viên
             </div>
           </div>
         </div>

@@ -1,0 +1,159 @@
+<div class="container-fluid">
+  <div class="container p-3">
+    <h1 class="mb-3">Thông Tin Đơn Giao</h1>
+    <form #f="ngForm">
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="maDG">Mã Đơn Giao</span>
+          <input
+            type="text"
+            class="form-control"
+            id="maDG"
+            name="maDG"
+            #maDG
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="diaChiGiao">Địa chỉ giao</span>
+          <input
+            type="text"
+            class="form-control"
+            id="diaChiGiao"
+            name="diaChiGiao"
+            #diaChiGiao
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="diaChiNhan">Địa chỉ nhận</span>
+          <input
+            type="text"
+            class="form-control"
+            id="diaChiNhan"
+            name="diaChiNhan"
+            #diaChiNhan
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+      <div class="row gx-3 mb-3">
+        <div class="col-md-4">
+          <span class="small mb-1" for="khoangCach">Khoản Cách</span>
+          <input
+            type="text"
+            class="form-control"
+            id="khoangCach"
+            name="khoangCach"
+            #khoangCach
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="ngayDatGiao">Ngày đặt giao</span>
+          <input
+            type="text"
+            class="form-control"
+            id="ngayDatGiao"
+            name="ngayDatGiao"
+            #ngayDatGiao
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-4">
+          <span class="small mb-1" for="ngayGiaoHang">Ngày nhận hàng</span>
+          <input
+            type="text"
+            class="form-control"
+            id="ngayGiaoHang"
+            name="ngayGiaoHang"
+            #ngayGiaoHang
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="tenNguoiNhan">Tên người nhận</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tenNguoiNhan"
+            name="tenNguoiNhan"
+            #tenNguoiNhan
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="sdtNguoiNhan">SĐT người nhận</span>
+          <input
+            type="tel"
+            class="form-control"
+            id="sdtNguoiNhan"
+            name="sdtNguoiNhan"
+            #sdtNguoiNhan
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+      <div class="row gx-3 mb-3">
+        <div class="col-md-6">
+          <span class="small mb-1" for="tenNguoiGui">Tên người gửi</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tenNguoiGui"
+            name="tenNguoiGui"
+            #tenNguoiGui
+            ngModel
+            disabled="true"
+          />
+        </div>
+        <div class="col-md-6">
+          <span class="small mb-1" for="sdtNguoiGui">SĐT người gửi</span>
+          <input
+            type="tel"
+            class="form-control"
+            id="sdtNguoiGui"
+            name="sdtNguoiGui"
+            #sdtNguoiGui
+            ngModel
+            disabled="true"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+          <span class="small mb-1" for="tongTien">Tổng tiền</span>
+          <input
+            type="text"
+            class="form-control"
+            id="tongTien"
+            name="tongTien"
+            #tongTien
+            ngModel
+            disabled="true"
+          />
+      </div>
+
+      <div class="col-md-4"></div>
+      <div class="d-grid gap-2 d-md-flex justify-content">
+        <button
+          type="button"
+          style="margin-left: 20px; color: white"
+          class="btn btn-warning"
+          (click)="onBack()"
+        >
+          Quay về
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -8,7 +8,8 @@
     </tr>
   </thead>
   <tbody>
-    <p *ngIf="">Không có đơn giao nào!</p>
+    <p *ngIf="!processing && dongiao.length === 0">Không có đơn giao nào!</p>
+    <p *ngIf="processing">Đang tải!</p>
     <tr *ngFor="let item of dongiao">
       <td width="15%">{{ item.maDG }}</td>
       <td width="35%">{{ getEmailKh(item.maKH) }}</td>

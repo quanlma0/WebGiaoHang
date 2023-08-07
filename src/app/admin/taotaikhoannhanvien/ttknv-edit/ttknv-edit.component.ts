@@ -21,6 +21,7 @@ export class TtknvEditComponent implements OnInit {
   id!: number;
   editMode = false;
   taiKhoan!: TaiKhoan;
+  taiKhoans: TaiKhoan[] = []
   f!: FormGroup
   chucvu!: ChucVu[]
   chucvu_nv: ChucVu[] = []
@@ -34,7 +35,8 @@ export class TtknvEditComponent implements OnInit {
     private toastr: ToastrService,
     private cvService: ChucvuService,
     private khoService: KhoService,
-    private nvService: NVService
+    private nvService: NVService,
+    private tkService: TKService
   ) {
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -51,6 +53,12 @@ export class TtknvEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tkService.getAllTaiKhoans().subscribe({
+      next: (value) => {
+        this.taiKhoans = value
+      }
+    })
+
     this.cvService.getAllChucVu()
       .subscribe({
         next: (value) => {
@@ -163,11 +171,10 @@ export class TtknvEditComponent implements OnInit {
       maCV = 4
     }
 
-    var maKho = 0;
+    let maKho = 0;
     if (value.kho != null) {
       maKho = value.kho
     }
-
     if (this.editMode) {
       this.taiKhoan = new TaiKhoan(this.id, this.taiKhoan.email, this.taiKhoan.matKhau, this.taiKhoan.sdt,
         this.taiKhoan.gioiTinh, this.taiKhoan.diaChi, this.taiKhoan.ngaySinh, this.taiKhoan.hoTen, value.trangThaiTK, this.taiKhoan.maCV, cv_chon, "")
@@ -193,31 +200,51 @@ export class TtknvEditComponent implements OnInit {
         });
     }
     else {
-      //Tạo tài khoản nhân viên (Admin, NhanVienKho)
+      let checkSDT = 0;
+
       var tk_chon = new TaiKhoan(0, value.email, value.matKhau, value.sdt, value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen,
         value.trangThaiTK, maCV, cv_chon, "")
-      this.nhanvien_moi = new NhanVien(0, value.email, value.matKhau, 0, tk_chon, maKho, new Kho(0, "", ""))
+      if (maCV === 1) {
+        //Tạo tài khoản nhân viên (Admin)
+        this.nhanvien_moi = new NhanVien(0, value.email, value.matKhau, 0, tk_chon, 0, new Kho(0, "", ""))
+      } else {
+        //Tạo tài khoản nhân viên (NhanVienKho)
+        this.nhanvien_moi = new NhanVien(0, value.email, value.matKhau, 0, tk_chon, maKho, new Kho(0, "", ""))
+      }
 
       //Test
-      // console.log(JSON.stringify(this.nhanvien_moi))
+      console.log(JSON.stringify(this.nhanvien_moi))
 
-      this.nvService.addTKNV(this.nhanvien_moi)
-        .subscribe({
-          next: (tk) => {
-            this.f.reset()
-            this.router.navigate(['/admin/taotaikhoannhanvien'], { relativeTo: this.route })
-            this.toastr.success("Tạo tài khoản NV Thành Công", "Thông báo", {
-              progressBar: true,
-              newestOnTop: true
-            })
-          },
-          error: (err) => {
-            this.toastr.error("Tài khoản đã có!", "Thông báo", {
-              progressBar: true,
-              newestOnTop: true
-            })
-          }
+      //Kiểm tra số điện thoại đã được đăng ký chưa + kiểm tra Email ở Server
+      this.taiKhoans.forEach(element => {
+        if (element.sdt === value.sdt) {
+          checkSDT = 1;
+        }
+      });
+      if (checkSDT === 1 || value.sdt.length !== 10) {
+        this.toastr.error("Số điện thoại đã có. Xin kiểm tra lại", "Thông báo", {
+          progressBar: true,
+          newestOnTop: true
         })
+      } else {
+        this.nvService.addTKNV(this.nhanvien_moi)
+          .subscribe({
+            next: (tk) => {
+              this.f.reset()
+              this.router.navigate(['/admin/taotaikhoannhanvien'], { relativeTo: this.route })
+              this.toastr.success("Tạo tài khoản NV Thành Công", "Thông báo", {
+                progressBar: true,
+                newestOnTop: true
+              })
+            },
+            error: (err) => {
+              this.toastr.error("Tài khoản đã có!", "Thông báo", {
+                progressBar: true,
+                newestOnTop: true
+              })
+            }
+          })
+      }
     }
   }
 

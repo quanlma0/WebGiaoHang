@@ -17,6 +17,7 @@ import { KhachHang } from '../models/khachHang';
 import { TKService } from 'src/services/taikhoan.service';
 import { ChucVu } from '../models/chucVu';
 import { CurrencyPipe } from '@angular/common';
+import { isAfter, isBefore, isEqual, parse } from 'date-fns';
 
 @Component({
   selector: 'app-giaongay',
@@ -175,7 +176,7 @@ export class GiaongayComponent implements OnInit {
     if (this.TongTien > 0) {
       this.km_apdung = []
       this.km.forEach(element => {
-        if (this, this.TongTien >= element.mucTienApDung) {
+        if (this.TongTien >= element.mucTienApDung && this.thoaManThoiGian(element.ngayApDung, element.ngayKetThuc)) {
           this.km_apdung.push(element)
         }
       });
@@ -203,10 +204,21 @@ export class GiaongayComponent implements OnInit {
     })
   }
 
-  chuyenVNDveString(VND: any){
-    const numericString = VND.replace(/[^\d.,]/g, ''); 
+  thoaManThoiGian(ngayApDung: string, ngayKetThuc: string): boolean {
+    const currentDate = new Date();
+    const parsedNgayApDung = parse(ngayApDung, 'yyyyMMdd', new Date());
+    const parsedNgayKetThuc = parse(ngayKetThuc, 'yyyyMMdd', new Date());
+    return (
+      (isAfter(currentDate, parsedNgayApDung) || isEqual(currentDate, parsedNgayApDung)) &&
+      (isBefore(currentDate, parsedNgayKetThuc) || isEqual(currentDate, parsedNgayKetThuc))
+    );
+  }
+
+  chuyenVNDveString(VND: any) {
+    const numericString = VND.replace(/[^\d.,]/g, '');
     return parseInt(numericString)
   }
+
   GiaoNgay() {
     this.processing = true;
     const value = this.f.value
@@ -225,7 +237,7 @@ export class GiaongayComponent implements OnInit {
 
     this.khachhang_hientai.taiKhoan.chucvu = cv;
     this.dongiao = new DonGiao(0, 'Chờ Xác Nhận', value.diaChiGiao, value.diaChiNhan, value.khoangCach, ngay_hientai, ngay_hientai,
-      value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, this.chuyenVNDveString(value.tt)*1000, this.khachhang_hientai.maKH, this.khachhang_hientai,
+      value.tenNguoiNhan, value.sdtNguoiNhan, value.tenNguoiGui, value.sdtNguoiGui, this.chuyenVNDveString(value.tt) * 1000, this.khachhang_hientai.maKH, this.khachhang_hientai,
       value.pttt, pttt_chon, value.ptgh, ptgh_chon, value.ptvc, ptvc_chon,
       value.km, km_chon)
 

@@ -7,6 +7,7 @@ import { ChucVu } from 'src/app/models/chucVu';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { TaiXe } from 'src/app/models/taiXe';
 import { PTService } from 'src/services/phuongthuc.service';
+import { TKService } from 'src/services/taikhoan.service';
 import { TXService } from 'src/services/taixe.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class RegisterTaixeComponent implements OnInit {
   f!: FormGroup
   taiXe!: TaiXe
   taiKhoan!: TaiKhoan
+  taiKhoans: TaiKhoan[] = []
   gioitinh = ["Nam", "Nữ"]
   ptvc!: PhuongThucVC[]
 
@@ -26,7 +28,8 @@ export class RegisterTaixeComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private txService: TXService,
-    private ptService: PTService
+    private ptService: PTService,
+    private tkService: TKService
   ) {
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -47,12 +50,17 @@ export class RegisterTaixeComponent implements OnInit {
     this.ptService.getAllPTVC().subscribe({
       next: (listData) => {
         this.ptvc = listData
-        console.log(this.ptvc)
       },
       error: (err) => {
         console.log(err)
       }
     });
+
+    this.tkService.getAllTaiKhoans().subscribe({
+      next: (value) => {
+        this.taiKhoans = value
+      }
+    })
 
     this.f = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -69,62 +77,76 @@ export class RegisterTaixeComponent implements OnInit {
     })
   }
 
-minimumAgeValidator(minimumAge: number): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    if (control.value === null || control.value === '') {
+  minimumAgeValidator(minimumAge: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control.value === null || control.value === '') {
+        return null;
+      }
+      const today = new Date();
+      const birthDate = new Date(control.value);
+      const age = today.getFullYear() - birthDate.getFullYear();
+
+      if (age < minimumAge || age >= 70) {
+        return { 'underAge': true };
+      }
+
       return null;
-    }
-    const today = new Date();
-    const birthDate = new Date(control.value);
-    const age = today.getFullYear() - birthDate.getFullYear();
-
-    if (age < minimumAge || age >= 70) {
-      return { 'underAge': true };
-    }
-
-    return null;
-  };
-}
-
-  Register() {
-    this.processing = true;
-    const value = this.f.value
-    //Tạo tài khoản Tài xế
-    var cv = new ChucVu(0, "")
-    this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
-      value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Chặn Hoạt Động", 3, cv, "")
-
-    var ptvc = new PhuongThucVC(0, "", 0)
-    //Tạo 1 Tài xế mới
-    this.taiXe = new TaiXe(0, value.maBangLai, value.tenPhuongTien, value.email, value.matKhau, this.taiKhoan, value.ptvc, ptvc, "", 0);
-
-    //Test JSON
-    // console.log(JSON.stringify(this.taiKhoan))
-    // console.log(JSON.stringify(this.taiXe))
-
-    this.txService.addTX(this.taiXe)
-      .subscribe({
-        next: (res) => {
-          this.processing = false;
-          this.f.reset()
-          this.toastr.success("Đăng ký tài xế xong, hãy đợi để Admin xác nhận để chính thức hoạt động!", "Thông báo", {
-            progressBar: true,
-            newestOnTop: true
-          })
-          this.router.navigate(['/login'], { relativeTo: this.route })
-
-        },
-        error: (err) => {
-          this.processing = false;
-          this.toastr.error("Tài xế đã tồn tại!", "Thông báo", {
-            progressBar: true,
-            newestOnTop: true
-          })
-        }
-      })
+    };
   }
 
+  checkSDT = 0;
+  Register() {
+    this.checkSDT = 0
+    this.processing = true;
+    const value = this.f.value
+    console.log(this.f.valid)
+    //Kiểm tra số điện thoại đã được đăng ký chưa + kiểm tra Email ở Server
+    this.taiKhoans.forEach(element => {
+      if (element.sdt === value.sdt) {
+        this.checkSDT = 1;
+      }
+    });
 
+    if (this.checkSDT === 1 || value.sdt.length !== 10) {
+      this.processing = false;
+      this.toastr.error("Số điện thoại đã có. Xin kiểm tra lại", "Thông báo", {
+        progressBar: true,
+        newestOnTop: true
+      })
+    } else {
+      //Tạo tài khoản Tài xế
+      var cv = new ChucVu(0, "")
+      this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
+        value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Chặn Hoạt Động", 3, cv, "")
 
+      var ptvc = new PhuongThucVC(0, "", 0)
+      //Tạo 1 Tài xế mới
+      this.taiXe = new TaiXe(0, value.maBangLai, value.tenPhuongTien, value.email, value.matKhau, this.taiKhoan, value.ptvc, ptvc, "", 0);
 
+      //Test JSON
+      // console.log(JSON.stringify(this.taiKhoan))
+      // console.log(JSON.stringify(this.taiXe))
+
+      this.txService.addTX(this.taiXe)
+        .subscribe({
+          next: (res) => {
+            this.processing = false;
+            this.f.reset()
+            this.toastr.success("Đăng ký tài xế xong, hãy đợi để Admin xác nhận để chính thức hoạt động!", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+            this.router.navigate(['/login'], { relativeTo: this.route })
+
+          },
+          error: (err) => {
+            this.processing = false;
+            this.toastr.error("Tài xế đã tồn tại!", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+          }
+        })
+    }
+  }
 }

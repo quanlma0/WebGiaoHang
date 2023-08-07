@@ -6,6 +6,7 @@ import { ChucVu } from 'src/app/models/chucVu';
 import { TaiKhoan } from 'src/app/models/taiKhoan';
 import { User } from 'src/app/models/user';
 import { KHService } from 'src/services/khachhang.service';
+import { TKService } from 'src/services/taikhoan.service';
 
 
 @Component({
@@ -18,13 +19,15 @@ export class RegisterComponent implements OnInit {
   f!: FormGroup
   khachhang!: User
   taiKhoan!: TaiKhoan
+  taiKhoans: TaiKhoan[] = []
   gioitinh = ["Nam", "Nữ"]
 
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
-    private khService: KHService
+    private khService: KHService,
+    private tkService: TKService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +42,12 @@ export class RegisterComponent implements OnInit {
       hoTen: new FormControl(null, Validators.required),
       trangThaiTK: new FormControl(null, Validators.required),
     })
+
+    this.tkService.getAllTaiKhoans().subscribe({
+      next: (value) => {
+        this.taiKhoans = value
+      }
+    })
   }
 
   minimumAgeValidator(minimumAge: number): ValidatorFn {
@@ -49,51 +58,68 @@ export class RegisterComponent implements OnInit {
       const today = new Date();
       const birthDate = new Date(control.value);
       const age = today.getFullYear() - birthDate.getFullYear();
-  
+
       if (age < minimumAge || age >= 70) {
         return { 'underAge': true };
       }
-  
+
       return null;
     };
   }
 
+  checkSDT = 0;
   Register() {
+    this.checkSDT = 0
     this.processing = true;
     const value = this.f.value
-    //Tạo tài khoản khách hàng
-    var cv = new ChucVu(0, "")
-    this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
-      value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Còn Hoạt Động", 2, cv, "")
 
-    //Tạo 1 khách hàng mới
-    this.khachhang = new User(0, value.email, value.matKhau, "", this.taiKhoan);
+    //Kiểm tra số điện thoại đã được đăng ký chưa + kiểm tra Email ở Server
+    this.taiKhoans.forEach(element => {
+      if (element.sdt === value.sdt) {
+        this.checkSDT = 1;
+      }
+    });
 
-    //Test JSON
-    // console.log(JSON.stringify(this.taiKhoan))
-    // console.log(JSON.stringify(this.khachhang))
-
-    this.khService.addKH(this.khachhang)
-      .subscribe({
-        next: (res) => {
-          this.processing = false;
-          this.f.reset()
-          this.toastr.success("Đăng Ký Thành Công", "Thông báo", {
-            progressBar: true,
-            newestOnTop: true
-          })
-          this.router.navigate(['/login'], { relativeTo: this.route })
-
-        },
-        error: (err) => {
-          this.processing = false;
-          this.toastr.error("Khách hàng đã tồn tại!", "Thông báo", {
-            progressBar: true,
-            newestOnTop: true
-          })
-        }
+    if (this.checkSDT === 1 || value.sdt.length !== 10) {
+      this.processing = false;
+      this.toastr.error("Số điện thoại đã có. Xin kiểm tra lại", "Thông báo", {
+        progressBar: true,
+        newestOnTop: true
       })
+    } else {
+      //Tạo tài khoản khách hàng
+      var cv = new ChucVu(0, "")
+      this.taiKhoan = new TaiKhoan(0, value.email, value.matKhau, value.sdt,
+        value.gioiTinh, value.diaChi, value.ngaySinh, value.hoTen, "Còn Hoạt Động", 2, cv, "")
+
+      //Tạo 1 khách hàng mới
+      this.khachhang = new User(0, value.email, value.matKhau, "", this.taiKhoan);
+
+      //Test JSON
+      // console.log(JSON.stringify(this.taiKhoan))
+      // console.log(JSON.stringify(this.khachhang))
+
+      this.khService.addKH(this.khachhang)
+        .subscribe({
+          next: (res) => {
+            this.processing = false;
+            this.f.reset()
+            this.toastr.success("Đăng Ký Thành Công", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+            this.router.navigate(['/login'], { relativeTo: this.route })
+
+          },
+          error: (err) => {
+            this.processing = false;
+            this.toastr.error("Email đã tồn tại!", "Thông báo", {
+              progressBar: true,
+              newestOnTop: true
+            })
+          }
+        })
+    }
+
   }
-
-
 }
